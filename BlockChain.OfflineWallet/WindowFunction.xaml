@@ -1,0 +1,246 @@
+﻿<Window x:Class="BlockChain.OfflineWallet.WindowFunction"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.OfflineWallet"
+        xmlns:local_share="clr-namespace:BlockChain.Share;assembly=BlockChain.Share"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" Icon="Image\function.png"
+        Title="ABI Function Define"  MinHeight="800" MinWidth="1280" Height="800" Width="1280" >
+
+    <Window.Resources>
+
+        <local_share:LanguageHelper x:Key="LanguageHelper"></local_share:LanguageHelper>
+
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5,0" />
+            <Setter Property="Width" Value="120" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Margin" Value="2,0" />
+        </Style>
+
+        <Style TargetType="CheckBox">
+            <Setter Property="Margin" Value="5,0" />
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5,2" />          
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="TextStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5" />
+        </Style>
+
+        <Style x:Key="NumberStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10,5" />
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+
+        <Style x:Key="NumberStyle2" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+
+
+    </Window.Resources>
+    
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0">
+            
+            <TabItem Width="200" Header="Common Function">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="400"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="100"></RowDefinition>
+                        <RowDefinition Height="150"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Content="Funcions"></Label>
+                    <Button Grid.Row="0" Grid.Column="0" Content="Ini Funcions" HorizontalAlignment="Right" Click="IniFun_Click"></Button>
+
+                    <DataGrid x:Name="DataGridFuncions" Grid.Row="1" Grid.Column="0"  Grid.RowSpan="3" AutoGenerateColumns="False" CanUserAddRows="False"   SelectionMode="Single">
+                        <DataGrid.Columns>
+
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.Header>
+                                    <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='选择'}"  />
+                                </DataGridTemplateColumn.Header>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <RadioButton  GroupName="Function" IsChecked="False"  Checked="Select_Checked" VerticalAlignment="Center" HorizontalAlignment="Center"> </RadioButton>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            
+                            <DataGridTextColumn   Binding="{Binding FunctionFullName}"  IsReadOnly="True"  ElementStyle="{StaticResource TextStyle}"  >
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='function Signature'}" />
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn   Binding="{Binding Remark}" Header="Remark"  IsReadOnly="True"  ElementStyle="{StaticResource TextStyle}"  >
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn   Binding="{Binding FunctionFullNameHash4}"  Header="MethodID" IsReadOnly="True"  ElementStyle="{StaticResource TextStyle}"  >
+                            </DataGridTextColumn>
+
+                            <DataGridTemplateColumn>                                
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button  Content="Delete" Click="DeleteFun_Click"   Width="75" Margin="3"></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    
+                    <Grid Grid.Row="4" Grid.Column="0" Height="150">
+                        <Grid.ColumnDefinitions>                           
+                            <ColumnDefinition Width="120"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>                           
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>                           
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="function signature:" ></Label>
+                        <TextBox x:Name="TextBoxFunctionFullName" Grid.Row="0" Grid.Column="1" Text="transfer(address,uint256)" ></TextBox>
+
+                        <Label Grid.Row="1" Grid.Column="0" Content="Remark:" ></Label>
+                        <TextBox x:Name="TextBoxFunctionRemark" Grid.Row="1" Grid.Column="1" Text="ERC20Token_Transfer" ></TextBox>
+
+                        <Button Grid.Row="2" Grid.Column="1" Content="Add Function" Click="AddFunction_Click"  HorizontalAlignment="Right" ></Button>
+
+                    </Grid>
+
+                    <Label Grid.Row="0" Grid.Column="1" Content="Funcion Paramers"></Label>
+                    <DataGrid x:Name="DataGridParamers" Grid.Row="1" Grid.Column="1"  AutoGenerateColumns="False" CanUserAddRows="False"    SelectionMode="Single">
+                        <DataGrid.Columns>
+                         
+                            <DataGridTextColumn   Binding="{Binding FunctionFullName}"  IsReadOnly="True" CanUserSort="False"  ElementStyle="{StaticResource TextStyle}"  >
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='function Signature'}" />
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn   Binding="{Binding ParamerType}"  IsReadOnly="True" CanUserSort="False"  ElementStyle="{StaticResource NumberStyle}"  >
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Paramer Type'}" />
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn   Binding="{Binding ParamerName}"  IsReadOnly="True"  CanUserSort="False" ElementStyle="{StaticResource NumberStyle}"  >
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Paramer Name'}" />
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn   Binding="{Binding ParamerOrder}"  IsReadOnly="True" CanUserSort="False" ElementStyle="{StaticResource NumberStyle}"  >
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Paramer Order'}" />
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTemplateColumn CanUserSort="False">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button  Content="Delete" Click="DeleteParamer_Click"  Width="75"></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn CanUserSort="False" >
+                                <DataGridTemplateColumn.Header>
+                                    <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Test Value'}" />
+                                </DataGridTemplateColumn.Header>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding TestValue, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  ></TextBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Grid Grid.Row="2" Grid.Column="1"  Height="50">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="130"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" Content="Get Input Data:" HorizontalAlignment="Right"></Label>
+                        <TextBox x:Name="TextBoxInputData" Grid.Column="1" Text="***" IsReadOnly="True" ></TextBox>
+
+                        <Button  Grid.Column="2" Content="Test Paramer Input" Click="TestParamerInput_Click" HorizontalAlignment="Right" ></Button>
+
+                    </Grid>
+
+                    <Grid Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" Height="250">
+                        <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>                          
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Current Function:" HorizontalAlignment="Right"></Label>
+                        <Label Name="LabelCurrentFunction" Grid.Row="0" Grid.Column="1" Content="" ></Label>
+                        
+                        <Label Grid.Row="1" Grid.Column="0" Content="Paramer ABI Type:" HorizontalAlignment="Right"></Label>
+                        <TextBox x:Name="TextBoxParamerType" Grid.Row="1" Grid.Column="1" Text="address" ></TextBox>
+                        
+                        <Label Grid.Row="2" Grid.Column="0" Content="Paramer ABI Name:" HorizontalAlignment="Right"></Label>
+                        <TextBox x:Name="TextBoxParamerName" Grid.Row="2" Grid.Column="1" Text="to" ></TextBox>
+
+                        <Label Grid.Row="3" Grid.Column="0" Content="Paramer Order:" HorizontalAlignment="Right"></Label>
+                        <TextBox x:Name="TextBoxParamerOrder" Grid.Row="3" Grid.Column="1" Text="1" ></TextBox>
+
+                        <Button Grid.Row="4" Grid.Column="1" Content="Add Paramer" Click="AddParamer_Click"  HorizontalAlignment="Right"></Button>
+
+                    </Grid>
+
+
+                </Grid>               
+                
+            </TabItem>
+
+            <!--<TabItem Width="200" Header="Complicated Function">
+            </TabItem>-->
+
+
+        </TabControl>
+
+        <Button Grid.Row="1" Content="close" HorizontalAlignment="Right" Click="Close_Click"></Button>
+        
+    </Grid>
+    
+</Window>

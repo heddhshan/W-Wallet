@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="IPeripheryImmutableState\Class1.cs" />
+      <Compile Remove="UniswapV3IQuoterV2\Class1.cs" />
+      <Compile Remove="UniswapV3IQuoter\Class1.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Nethereum.Web3" Version="4.11.0" />
+    </ItemGroup>
+    
+</Project>

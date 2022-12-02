@@ -1,0 +1,6 @@
+{
+  "name": "hardhat-project",
+  "dependencies": {
+    "hardhat": "^2.1.1"
+  }
+}

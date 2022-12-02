@@ -1,0 +1,172 @@
+﻿<Window x:Class="BlockChain.OfflineWallet.WindowLoadMnemonic"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.OfflineWallet"
+        mc:Ignorable="d"
+        Title="导入助记词" Height="600" Width="600" MinWidth="600" MinHeight="600" MaxWidth="600" MaxHeight="600"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <local:LanguageHelper x:Key="LanguageHelper"></local:LanguageHelper>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="PasswordBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="Margin" Value="0,0,10,0" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
+    
+    <Grid Margin="10">
+        <TabControl>
+            <TabItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='导入官方助记词'}" Width="120">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition ></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition  Height="20"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='输入助记词'}"></Label>
+                    <Label Grid.Row="1" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='输入主地址'}" ></Label>
+                    <Button  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Height="1" IsEnabled="False"></Button>
+                    <Label Grid.Row="3" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='设置钱包名称'}"></Label>
+                    <Label Grid.Row="4" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='设置密码'}"></Label>
+                    <Label Grid.Row="5" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='确认密码'}"></Label>
+                    <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='密码提示'}" Grid.Row="6" Grid.Column="0"></Label>
+
+                    <Grid Grid.Row="4" Grid.Column="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='弱'}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom"></Label>
+                        <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='强'}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"></Label>
+                    
+                        <ProgressBar x:Name="ProgressBar1"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="10" Value="1" Maximum="3" Margin="2" ></ProgressBar>
+                    </Grid>
+
+                    <TextBox x:Name="TextBoxMne" Grid.Row="0" Grid.Column="1" Height="80" TextWrapping="Wrap" FontSize="14"> </TextBox>
+                    <TextBox x:Name="TextBoxMainAddress" Grid.Row="1" Grid.Column="1" MaxLength="64"></TextBox>
+                    <TextBox x:Name="TextBoxWalletName" Grid.Row="3" Grid.Column="1" MaxLength="64"></TextBox>
+                    <PasswordBox x:Name="PasswordBoxInput1"  Grid.Row="4" Grid.Column="1" MaxLength="64"  PasswordChanged="OnInputPassword"></PasswordBox>
+                    <PasswordBox x:Name="PasswordBoxInput2"  Grid.Row="5" Grid.Column="1" MaxLength="64"></PasswordBox>
+                    <TextBox x:Name="TextBoxPasswordTip" Grid.Row="6" Grid.Column="1" MaxLength="64"></TextBox>
+
+                    <Button  Grid.Row="1" Grid.Column="2" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='验证'}" Click="OnValidate"></Button>
+                    <Button  Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='确认'}" Click="OnLoadHDWallet"></Button>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='导入第三方助记词'}" Width="120">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition ></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="10"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='输入助记词'}"></Label>
+                    <Label Grid.Row="0" Grid.Column="2" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='加密保存'}" HorizontalContentAlignment="Left"></Label>
+                    <Label Grid.Row="1" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='输入Path'}"></Label>
+                    <Label Grid.Row="2" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='输入助记词Salt'}"></Label>
+                    <Label Grid.Row="2" Grid.Column="2" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='明文保存'}" HorizontalContentAlignment="Left"></Label>
+                    <Label Grid.Row="3" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='输入验证地址'}"></Label>
+                    <Label Grid.Row="4" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='输入地址序号'}"></Label>
+                    <Button  Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Height="1" IsEnabled="False"></Button>
+                    <Label Grid.Row="6" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='设置钱包名称'}"></Label>
+                    <Label Grid.Row="7" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='设置密码'}"></Label>
+                    <Label Grid.Row="8" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='确认密码'}"></Label>
+                    <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='密码提示'}" Grid.Row="9" Grid.Column="0"></Label>
+
+                    <Grid Grid.Row="6" Grid.Column="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='弱'}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom"></Label>
+                        <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='强'}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"></Label>
+                        <!--<Slider  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"></Slider>-->
+                        <ProgressBar  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="10" Value="1" Maximum="3" Margin="2"></ProgressBar>
+                    </Grid>
+
+                    <TextBox x:Name="TextBox1Mne" Grid.Row="0" Grid.Column="1" Height="80" TextWrapping="Wrap" FontSize="14"></TextBox>
+                    <PasswordBox x:Name="PasswordBox1MnePassword" Grid.Row="2" Grid.Column="1" MaxLength="64"></PasswordBox>
+                    <TextBox x:Name="TextBox1MainAddress" Grid.Row="3" Grid.Column="1" MaxLength="64"></TextBox>
+                    <TextBox x:Name="TextBox1MainAddressNo" Grid.Row="4" Grid.Column="1" MaxLength="64"></TextBox>
+                    <TextBox x:Name="TextBox1WalletName" Grid.Row="6" Grid.Column="1" MaxLength="64"></TextBox>
+                    <PasswordBox x:Name="PasswordBox1Input1"  Grid.Row="7" Grid.Column="1" MaxLength="64"></PasswordBox>
+                    <PasswordBox x:Name="PasswordBox1Input2"  Grid.Row="8" Grid.Column="1" MaxLength="64" PasswordChanged="OnInputPassword" ></PasswordBox>
+                    <TextBox x:Name="TextBoxPassword1Tip" Grid.Row="9" Grid.Column="1" MaxLength="64"></TextBox>
+
+                    <ComboBox  Name="ComboBox1Path" Grid.Row="1" Grid.Column="1" SelectedIndex="0">
+                        <ComboBoxItem>m/44'/60'/0'/0/x</ComboBoxItem>
+                        <ComboBoxItem>m/44'/60'/0'/x</ComboBoxItem>
+                    </ComboBox>
+
+                    <Button  Grid.Row="4" Grid.Column="2" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='验证'}" Click="OnValidate1"></Button>
+                    <Button  Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='确认'}" Click="OnLoadHDWallet1"></Button>
+
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+        
+        
+    </Grid>
+</Window>

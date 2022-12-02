@@ -1,0 +1,17 @@
+﻿<Window x:Class="BlockChain.Share.WindowLoading"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.Share"
+        mc:Ignorable="d"
+        Title="Please Wait" Height="120" Width="450" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
+    <Grid Background="WhiteSmoke" Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <ProgressBar Grid.Row="0" Height="32" HorizontalAlignment="Center" Name="progressBar1" VerticalAlignment="Center" IsIndeterminate="True"  Width="425"/>
+        <Button Grid.Row="1" Content="Hide" Width="80" Height="35" HorizontalAlignment="Right" Click="OnClickHide" ></Button>
+    </Grid>
+</Window>

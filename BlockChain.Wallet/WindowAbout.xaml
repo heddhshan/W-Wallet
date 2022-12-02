@@ -1,0 +1,246 @@
+﻿<Window x:Class="BlockChain.Wallet.WindowAbout"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.Wallet"
+        mc:Ignorable="d" Icon="Image\guanyu.png"
+        Title="About" Height="600" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"  >
+
+    <Window.Resources>
+        <local:LanguageHelper x:Key="LanguageHelper"></local:LanguageHelper>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="PasswordBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+            <Setter Property="FontFamily" Value="Courier New" />
+            <Setter Property="Margin" Value="5,0" />
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <!--<Style TargetType="Button">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+        </Style>-->
+
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TabControl x:Name="TabControlMain" Grid.Row="0" Grid.Column="0" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='基本信息'}" MinWidth="120">
+                <StackPanel Margin="5">
+                    <Grid Background="WhiteSmoke" Margin="5" Height="80">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130"></ColumnDefinition>
+                            <ColumnDefinition  Width="120"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='当前版本'}" Grid.RowSpan="3" ></Label>
+                        <Label Grid.Row="0" Grid.Column="1" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='当前版本号:'}" ></Label>
+                        <TextBlock x:Name="TextBlockCurVersion" Grid.Row="0" Grid.Column="2" Text="2020.01.01"></TextBlock>
+
+                        <Label Grid.Row="1" Grid.Column="1" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='联系方式:'}" ></Label>
+                        <TextBlock Grid.Row="1" Grid.Column="2">
+                            <Hyperlink x:Name="HyperlinkLinkInfo" Click="OnClickTelegram"></Hyperlink>
+                        </TextBlock>
+                    </Grid>
+                    <Grid Background="WhiteSmoke" Margin="5" Height="400">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130"></ColumnDefinition>
+                            <ColumnDefinition  Width="120"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="80"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="80"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='最新版本'}" Grid.RowSpan="6" ></Label>
+
+                        <Label Grid.Row="0" Grid.Column="1" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='最新版本号:'}" ></Label>
+                        <TextBlock  x:Name="TextBlockLastVer" Grid.Row="0" Grid.Column="2" Text="2020.06.01"></TextBlock>
+
+                        <Label Grid.Row="1" Grid.Column="1" Content="BT Link:" ></Label>
+                        <TextBox x:Name="TextBoxBT"  Grid.Row="1" Grid.Column="2" TextWrapping="Wrap"  Text="" IsReadOnly="True"></TextBox>
+                        <Button  Grid.Row="1" Grid.Column="3" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='下载'}" Width="80" Height="30" HorizontalAlignment="Left" Click="OnDownLoadBT" ></Button>
+
+                        <Label Grid.Row="2" Grid.Column="1" Content="eMule Link:" ></Label>
+                        <TextBox  x:Name="TextBoxEd2k" Grid.Row="2" Grid.Column="2" TextWrapping="Wrap"  Height="60" Text="" IsReadOnly="True"></TextBox>
+                        <Button  Grid.Row="2" Grid.Column="3" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='下载'}" Width="80" Height="30" HorizontalAlignment="Left" Click="OnDownLoadeMule" ></Button>
+
+                        <Label Grid.Row="3" Grid.Column="1" Content="Http Link:" ></Label>
+                        <TextBox x:Name="TextBoxHttp"  Grid.Row="3" Grid.Column="2" TextWrapping="Wrap"  Text="" IsReadOnly="True"></TextBox>
+                        <Button  Grid.Row="3" Grid.Column="3" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='下载'}" Width="80" Height="30" HorizontalAlignment="Left" Click="OnDownLoadHttp" ></Button>
+
+                        <Label Grid.Row="4" Grid.Column="1" Content="Ipfs Link:" ></Label>
+                        <TextBox x:Name="TextBoxIpfs"  Grid.Row="4" Grid.Column="2" TextWrapping="Wrap"  Text="" IsReadOnly="True"></TextBox>
+                        <Button  Grid.Row="4" Grid.Column="3" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='下载'}" Width="80" Height="30" HorizontalAlignment="Left" Click="OnDownLoadIpfs" ></Button>
+
+                        <Label Grid.Row="5" Grid.Column="1" Content="Other Link:" ></Label>
+                        <TextBox x:Name="TextBoxOther"  Grid.Row="5" Grid.Column="2" TextWrapping="Wrap"  Text="" IsReadOnly="True"></TextBox>
+                        <Button  Grid.Row="5" Grid.Column="3" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='下载'}" Width="80" Height="30" HorizontalAlignment="Left" Click="OnDownLoadOther" ></Button>
+
+                        <Label Grid.Row="6" Grid.Column="1" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='更新说明:'}" ></Label>
+                        <!--<Label Grid.Row="4" Grid.Column="3" Content="certutil -hashfile file.zip SHA256"></Label>-->
+                        <TextBox  x:Name="TextBoxUpdateInfo" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" TextWrapping="Wrap"  Height="60" Text="" IsReadOnly="True"></TextBox>
+
+                        <Label Grid.Row="7" Grid.Column="0" Content="Checksum(SHA256)(certutil):" Grid.ColumnSpan="2"  ></Label>
+                        <TextBox  x:Name="TextBoxSha256" Grid.Row="7" Grid.Column="2" Text="" IsReadOnly="True" Grid.ColumnSpan="2"></TextBox>
+
+                    </Grid>
+
+                </StackPanel>
+
+            </TabItem>
+
+            <TabItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='合约地址'}" MinWidth="120">
+
+                <StackPanel Margin="10" >
+
+                    <Grid Margin="5"  Width="700">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="App Info:" ></Label>
+                        <Label Name="LableAppInfo" Grid.Row="0" Grid.Column="1"  Foreground="Blue" Content="" HorizontalAlignment="Left" MouseLeftButtonDown="LabelContract_MouseLeftButtonDown"></Label>
+                    </Grid>
+
+                    <Grid Margin="5"  Width="700">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0" Content="Wallet Helper:" ></Label>
+                        <Label x:Name="LabelBacth" Grid.Column="1" Foreground="Blue" Content="" HorizontalAlignment="Left" MouseLeftButtonDown="LabelContract_MouseLeftButtonDown"></Label>
+                    </Grid>
+
+                    <Grid Margin="5"  Width="700">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0" Content="UniswapV2RouterV2[Third Party]:" ></Label>
+                        <Label Name="LableUniswapV2RouterV2" Grid.Column="1"  Foreground="Blue" Content="" HorizontalAlignment="Left" MouseLeftButtonDown="LabelContract_MouseLeftButtonDown"></Label>
+                    </Grid>
+
+
+                    <Grid Margin="5"  Width="700">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0" Content="UniswapV3SwapRouter[Third Party]:" ></Label>
+                        <Label Name="LableUniswapV3SwapRouter" Grid.Column="1"  Foreground="Blue" Content="" HorizontalAlignment="Left" MouseLeftButtonDown="LabelContract_MouseLeftButtonDown"></Label>
+                    </Grid>
+
+                </StackPanel>
+
+            </TabItem>
+
+            <TabItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='安全与隐私'}"  MinWidth="120">
+                <ScrollViewer  Margin="30"  VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <TextBlock  Margin="5"  Name="TextBlockNotice" Text=""  TextWrapping="Wrap"></TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem MinWidth="120">
+                <TabItem.Header>
+                    <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='免责声明'}"></Label>
+                </TabItem.Header>
+                <StackPanel Margin="30">
+                    <TextBlock TextWrapping="Wrap" Name="TextBlockDisclaimer"></TextBlock>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem  MinWidth="120"  >
+                <TabItem.Header>
+                    <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='感谢'}"></Label>
+                </TabItem.Header>
+                <Grid Margin="10"  >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0"  Source="Image\thank-you-ico.png"></Image>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <Button Margin="10" Content="Ethereum" Tag="https://ethereum.org/"  FontSize="24" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GoToUrl_Click" ></Button>
+                        <Button Margin="10" Content="Nethereum" Tag="https://nethereum.com/"  FontSize="36" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GoToUrl_Click" ></Button>
+                        <Button Margin="10" Content="Microsoft VisualStudio" Tag="https://visualstudio.microsoft.com/"  FontSize="18" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GoToUrl_Click" ></Button>
+                        <Button Margin="10" Content="EtherScan" Tag="https://etherscan.io/"  FontSize="18" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GoToUrl_Click" ></Button>
+                        <Button Margin="10" Content="remix" Tag="https://remix.ethereum.org"  FontSize="18" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GoToUrl_Click" ></Button>
+                        <Button Margin="10" Content="Newtonsoft.Json" Tag="https://www.newtonsoft.com/json"  FontSize="12" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GoToUrl_Click" ></Button>
+                        <Button Margin="10" Content="ZXing.Net" Tag="https://github.com/micjahn/ZXing.Net/"  FontSize="12" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GoToUrl_Click" ></Button>
+                        <Button Margin="10" Content="log4net" Tag="https://logging.apache.org/log4net/"  FontSize="12" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GoToUrl_Click" ></Button>
+                        <Button Margin="10" Content="NBitcoin" Tag="https://github.com/MetacoSA/NBitcoin"  FontSize="12" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GoToUrl_Click" ></Button>
+                        <!--<Button Margin="10" Content="Everyone who helped me" Tag="https://etherscan.io/address/0xC7A9d8C6C987784967375aE97a35D30AB617eB48"  FontSize="24" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="GoToUrl_Click" ></Button>-->
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <!--<TabItem Visibility="Hidden" Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='捐赠'}" >
+                <Grid Margin="10" Height="150" VerticalAlignment="Top" >
+                    <Grid.ColumnDefinitions >
+                        <ColumnDefinition ></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition ></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='收款地址:'}"></Label>
+                    <Label Grid.Row="0" Grid.Column="1" Name="LabelDonation" Content=""  HorizontalAlignment="Left" Foreground="Blue"></Label>
+                    <Button Grid.Row="0" Grid.Column="2" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='捐赠'}" Width="100" Click="OnClickDonation"></Button>
+                </Grid>
+            </TabItem>-->
+
+        </TabControl>
+
+    </Grid>
+</Window>

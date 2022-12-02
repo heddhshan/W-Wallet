@@ -1,0 +1,75 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlockChain.Common", "BlockChain.Common\BlockChain.Common.csproj", "{3E639B35-9ED7-4751-91E9-7CD864F1C455}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlockChain.Wallet", "BlockChain.Wallet\BlockChain.Wallet.csproj", "{D8D2C1E8-C44B-4195-9ACC-82B81D46F0A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{2FAD3E2E-35FB-4000-8BF3-B411A7CA0AAA}"
+	ProjectSection(SolutionItems) = preProject
+		Business Source License 1.1 = Business Source License 1.1
+		ReadMe.txt = ReadMe.txt
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlockChain.Share", "BlockChain.Share\BlockChain.Share.csproj", "{C152DF5D-44DE-4DBF-8AF3-C56B3A99CC40}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nethereum.Uniswap", "Nethereum.Uniswap-V2-and-V3-main\Nethereum.Uniswap\Nethereum.Uniswap.csproj", "{72BA81CB-47CC-4A12-B49F-2BD110B96F11}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlockChain.OfflineWallet", "BlockChain.OfflineWallet\BlockChain.OfflineWallet.csproj", "{3A27837C-546E-4B29-B278-0BC3DDD034E3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlockChain.OfflineWallet.DataSig", "BlockChain.OfflineWallet.DataSig\BlockChain.OfflineWallet.DataSig.csproj", "{46E973D4-3F2A-476D-BD4F-112F8135799E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlockChain.Lido", "BlockChain.Lido\BlockChain.Lido.csproj", "{8B89CCD8-A1BC-467C-8868-9C88E62A7466}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup_OnlineWallet", "Setup_OnlineWallet\Setup_OnlineWallet.vdproj", "{89D61E84-AF9C-403C-AC59-7E5DBCCC82DD}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup_OfflineWallet", "Setup_OfflineWallet\Setup_OfflineWallet.vdproj", "{49D10948-6680-445D-A91F-4A2DE8C4F0A9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3E639B35-9ED7-4751-91E9-7CD864F1C455}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E639B35-9ED7-4751-91E9-7CD864F1C455}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E639B35-9ED7-4751-91E9-7CD864F1C455}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E639B35-9ED7-4751-91E9-7CD864F1C455}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8D2C1E8-C44B-4195-9ACC-82B81D46F0A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8D2C1E8-C44B-4195-9ACC-82B81D46F0A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8D2C1E8-C44B-4195-9ACC-82B81D46F0A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8D2C1E8-C44B-4195-9ACC-82B81D46F0A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C152DF5D-44DE-4DBF-8AF3-C56B3A99CC40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C152DF5D-44DE-4DBF-8AF3-C56B3A99CC40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C152DF5D-44DE-4DBF-8AF3-C56B3A99CC40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C152DF5D-44DE-4DBF-8AF3-C56B3A99CC40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72BA81CB-47CC-4A12-B49F-2BD110B96F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72BA81CB-47CC-4A12-B49F-2BD110B96F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72BA81CB-47CC-4A12-B49F-2BD110B96F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72BA81CB-47CC-4A12-B49F-2BD110B96F11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A27837C-546E-4B29-B278-0BC3DDD034E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A27837C-546E-4B29-B278-0BC3DDD034E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A27837C-546E-4B29-B278-0BC3DDD034E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A27837C-546E-4B29-B278-0BC3DDD034E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46E973D4-3F2A-476D-BD4F-112F8135799E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46E973D4-3F2A-476D-BD4F-112F8135799E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46E973D4-3F2A-476D-BD4F-112F8135799E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46E973D4-3F2A-476D-BD4F-112F8135799E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B89CCD8-A1BC-467C-8868-9C88E62A7466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B89CCD8-A1BC-467C-8868-9C88E62A7466}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B89CCD8-A1BC-467C-8868-9C88E62A7466}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B89CCD8-A1BC-467C-8868-9C88E62A7466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89D61E84-AF9C-403C-AC59-7E5DBCCC82DD}.Debug|Any CPU.ActiveCfg = Debug
+		{89D61E84-AF9C-403C-AC59-7E5DBCCC82DD}.Release|Any CPU.ActiveCfg = Release
+		{49D10948-6680-445D-A91F-4A2DE8C4F0A9}.Debug|Any CPU.ActiveCfg = Debug
+		{49D10948-6680-445D-A91F-4A2DE8C4F0A9}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C334A58E-FEE9-410F-B9F4-4703852F26A0}
+	EndGlobalSection
+EndGlobal

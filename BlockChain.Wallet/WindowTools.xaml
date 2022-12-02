@@ -1,0 +1,185 @@
+﻿<Window x:Class="BlockChain.Wallet.WindowTools"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.Wallet" Icon="Image\tool.png"
+        mc:Ignorable="d" ResizeMode="NoResize"
+        Title="常用在线工具" MinHeight="600" MinWidth="800"  Height="600" Width="800"  WindowStartupLocation="CenterScreen">
+
+
+    <Window.Resources>
+        <local:LanguageHelper x:Key="LanguageHelper"></local:LanguageHelper>
+
+        <Style TargetType="Label">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />            
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="2" />
+        </Style>
+        
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="35" ></Setter>
+                     <Setter Property="Width" Value="160" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+        </Style>
+
+    </Window.Resources>
+
+    <TabControl>        
+      
+        <TabItem Header="Exe MultiCall">
+            <Grid  Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition  Height="50"></RowDefinition>
+                    <RowDefinition></RowDefinition>                    
+                    <RowDefinition  Height="150"></RowDefinition>
+                </Grid.RowDefinitions>                
+
+                <Grid  Grid.Row="0"  Grid.Column="0" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="80"></ColumnDefinition>
+                            <ColumnDefinition Width="80"></ColumnDefinition>
+                            <ColumnDefinition Width="80"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='MultiCall 可以把多个调用合并成一个事务执行'}" HorizontalAlignment="Left"></Label>
+                        <Button Grid.Column="1" Content="Clear" Click="ClearMultiCallList_Click" Width="75" ></Button>
+                        <Button Grid.Column="2" Content="Import" Click="ImportMultiCallList_Click" Width="75" ></Button>
+                        <Button Grid.Column="3" Content="Export" Click="ExportMultiCallList_Click" Width="75" ></Button>
+
+                    </Grid>
+                </Grid>
+
+                <DataGrid Name="DataGridFunction" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single">
+                    <DataGrid.Columns>
+                        
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.Header>
+                                <TextBlock Text ="Target" />
+                            </DataGridTemplateColumn.Header>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="{Binding Path=Target}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
+                                            Click="OnGotoAddress" Foreground="Blue" FontFamily="Courier New">
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                       
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.Header>
+                                <TextBlock Text ="Value(ETH)" />
+                            </DataGridTemplateColumn.Header>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Path=DecimalValue}" HorizontalAlignment="Right"></Label>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Width="280">
+                            <DataGridTemplateColumn.Header>
+                                <TextBlock Text ="InputData" />
+                            </DataGridTemplateColumn.Header>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Path=InputData}" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" ></TextBox>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn  Width="80">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Delete" Click="DeleteCall_Click"  Width="75" HorizontalAlignment="Center"></Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <!--<DataGridTemplateColumn>
+                            <DataGridTemplateColumn.Header>
+                                <TextBlock Text ="Success" />
+                            </DataGridTemplateColumn.Header>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Path=Success}"></Label>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.Header>
+                                <TextBlock Text ="CallOutput" />
+                            </DataGridTemplateColumn.Header>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Path=CallOutput}" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" ></TextBox>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>-->
+
+
+                    </DataGrid.Columns>
+                </DataGrid>
+                
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"></ColumnDefinition>
+                        <ColumnDefinition Width="350"></ColumnDefinition>
+                        <ColumnDefinition Width="80"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Target:" HorizontalAlignment="Right"></Label>
+                    <TextBox Name="TextBoxTarget" Grid.Row="0" Grid.Column="1" Text="0xC7A9d8C6C987784967375aE97a35D30AB617eB48" Height="35" VerticalContentAlignment="Center"></TextBox>
+
+                    <Label Grid.Row="0" Grid.Column="2" Content="Value:" HorizontalAlignment="Right"></Label>
+                    <TextBox Name="TextBoxDecimalValue" Grid.Row="0" Grid.Column="3" Text="0.123" VerticalContentAlignment="Center"></TextBox>
+
+                    <Label Grid.Row="1" Grid.Column="0" Content="Input Data:" HorizontalAlignment="Right"></Label>
+                    <TextBox Name="TextBoxInput" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="0x69206c6f76652075"   TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" ></TextBox>
+
+                    <StackPanel  Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="4"  Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="Add Call" Width="120" Margin="10,0" Click="AddCall_Click"></Button>
+                        <Button Content="Exe MultiCall List" Width="120" Margin="10,0"  Click="ExeMultiCallList_Click"></Button>
+                    </StackPanel>                   
+
+                </Grid>
+                
+            </Grid>
+        </TabItem>
+
+        <TabItem Header="Cancle Transaction">
+
+            <Grid Height="100" Width="760" VerticalAlignment="Top" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Cancle Transaction Hash:"></Label>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="TextBoxCancleTransactionHash" Height="35" VerticalContentAlignment="Center"></TextBox>
+                <Button  Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Content="Cancle Transaction" Click="CancleTransaction_Click" ></Button>
+            </Grid>
+            
+        </TabItem>
+        
+        
+        
+    </TabControl>
+    
+</Window>

@@ -1,0 +1,223 @@
+﻿<Window x:Class="BlockChain.Wallet.WindowLido"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.Wallet"
+        mc:Ignorable="d" Icon="Image\lido.png"
+         Loaded="WindowOnLoaded" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Title="Uniswap Client" Height="600" Width="800">
+
+    <Window.Resources>
+
+        <local:LanguageHelper x:Key="LanguageHelper"></local:LanguageHelper>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+
+
+    </Window.Resources>
+    
+    
+    <TabControl>
+        <TabItem Header="Stake" MinWidth="150">
+
+            <Grid  Margin="5" Width="720" VerticalAlignment="Top" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <!--<RowDefinition Height="50"></RowDefinition>-->
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='账号:'}" Foreground="Blue"></Label>
+                <ComboBox  x:Name="ComboBoxAddress1"  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" SelectionChanged="ComboBoxAddress1_SelectionChanged" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="{Binding  ElementName=ComboBoxAddress1, Path=Width}" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="240" ></ColumnDefinition>
+                                    <ColumnDefinition ></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Content="{Binding AddressAlias}" HorizontalAlignment="Left" Foreground="Blue"></Label>
+                                <Label Grid.Column="1" Content="{Binding Address}" VerticalAlignment="Center" Foreground="Blue"></Label>
+                            </Grid>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <Label Grid.Row="1" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='质押金额（ETH）:'}" Foreground="Blue"></Label>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="TextBoxStake" ></TextBox>
+                <CheckBox Grid.Row="1" Grid.Column="2"  x:Name="CheckBoxMax" Content="Max" Checked="Max_Checked" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden"></CheckBox>
+                <Label Grid.Row="1" Grid.Column="3"  Name="LabelUserEthAmount"></Label>
+
+                <!--<Label Grid.Row="2" Grid.Column="0" Content="Current Stake Limit:" ></Label>
+                <Label Grid.Row="2" Grid.Column="1" Content="123.22" Name="LableStakeLimit"></Label>-->
+
+                <Button Content="Submit" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Click="Submit_Click"></Button>
+            </Grid>
+                        
+        </TabItem>
+
+        <TabItem Header="Query and ...UnStake" MinWidth="150">
+
+            <Grid Margin="5" Width="720" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="150"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="100"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='地址:'}" Foreground="Blue" HorizontalAlignment="Right"></Label>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="TextBoxUserAddress"  Text=""></TextBox>
+                <Button Grid.Row="0" Grid.Column="2" Content="Query" Width="100" HorizontalAlignment="Left"  Click="Query_Click"></Button>
+
+                <Grid  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="150"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition ></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                        <!--<RowDefinition ></RowDefinition>-->
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="User stETH Balance:" HorizontalAlignment="Right"></Label>
+                    <TextBox Grid.Row="0" Grid.Column="1"  x:Name="TextBoxUser_stETHAmount" IsReadOnly="True"></TextBox>
+
+                    <Label Grid.Row="0" Grid.Column="2" Content="User wstETH Balance:" HorizontalAlignment="Right"></Label>
+                    <TextBox Grid.Row="0" Grid.Column="3"  x:Name="TextBoxUser_wstETHAmount" IsReadOnly="True"></TextBox>
+
+                    <Label Grid.Row="1" Grid.Column="0" Content="Lido Current Stake Limit:" HorizontalAlignment="Right"></Label>
+                    <Label Grid.Row="1" Grid.Column="1" x:Name="LabelLidoCurrentStakeLimit" ></Label>
+
+                    <Label Grid.Row="1" Grid.Column="2" Content="Lido Is Staking Paused:" HorizontalAlignment="Right"></Label>
+                    <CheckBox Grid.Row="1" Grid.Column="3" x:Name="CheckBoxLidoIsStakingPaused" IsEnabled="False" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="5,0" ></CheckBox>
+                    
+                </Grid>
+
+            </Grid>
+
+        </TabItem>
+
+        <TabItem Header="Wrap or UnWrap" MinWidth="150">
+            <Grid  Margin="5" Width="720" VerticalAlignment="Top" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="100"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='账号:'}" Foreground="Blue"></Label>
+                <ComboBox  x:Name="ComboBoxAddress3"  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" SelectionChanged="ComboBoxAddress3_SelectionChanged" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="{Binding  ElementName=ComboBoxAddress3, Path=Width}" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="240" ></ColumnDefinition>
+                                    <ColumnDefinition ></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Content="{Binding AddressAlias}" HorizontalAlignment="Left" Foreground="Blue"></Label>
+                                <Label Grid.Column="1" Content="{Binding Address}" VerticalAlignment="Center" Foreground="Blue"></Label>
+                            </Grid>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <Label Grid.Row="1" Grid.Column="0" Content="User stEth:" HorizontalAlignment="Right"></Label>
+                <Label Grid.Row="1" Grid.Column="1" x:Name="Label_stEth" Foreground="Blue" HorizontalAlignment="Left" ></Label>
+                <Label Grid.Row="1" Grid.Column="2" Content="User wstEth:" HorizontalAlignment="Right"></Label>
+                <Label Grid.Row="1" Grid.Column="3"  Name="Label_wstEth" Foreground="Blue" HorizontalAlignment="Left"></Label>
+
+                <Label Grid.Row="2" Grid.Column="0" Content="stEth => wstETH:" HorizontalAlignment="Right" ></Label>
+                <Label Grid.Row="2" Grid.Column="1" x:Name="Label_stEth_wstETH" Foreground="Blue" HorizontalAlignment="Left" ></Label>
+                <Label Grid.Row="2" Grid.Column="2" Content="wtEth => stETH:" HorizontalAlignment="Right" ></Label>
+                <Label Grid.Row="2" Grid.Column="3"  Name="Label_wstEth_stETH" Foreground="Blue" HorizontalAlignment="Left"></Label>
+
+                <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Width="720">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="150"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Input stEth Amount:"  HorizontalAlignment="Right"></Label>
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="TextBoxInputstEth" ></TextBox>
+                    <Button Grid.Row="0" Grid.Column="2" Content="Wrap" Click="Wrap_Click" Width="100" HorizontalAlignment="Left"></Button>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Input wstEth Amount:" HorizontalAlignment="Right"></Label>
+                    <TextBox Grid.Row="1" Grid.Column="1"  x:Name="TextBoxInputwstEth"></TextBox>
+                    <Button Grid.Row="1" Grid.Column="2" Content="UnWrap" Click="UnWrap_Click" Width="100" HorizontalAlignment="Left"></Button>
+
+                </Grid>
+
+            </Grid>
+
+        </TabItem>
+
+        <TabItem Header="Remark" MinWidth="150">
+            <StackPanel Margin="10">
+                <TextBlock TextWrapping="Wrap" Text="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Lido是当前最流行的去中心化的以太坊2.0质押挖矿系统，通过在以太坊链上操作（存入ETH）就可以参与以太坊2.0质押挖矿。'}"></TextBlock>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='本客户端目前只支持以太坊主网和用于测试的goerli网络。'}"></TextBlock>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Lido的官网地址是 https://lido.fi/ ，官方质押地址是 https://stake.lido.fi/ 。'}"></TextBlock>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='本客户端直接调用Lido（stETH），主网合约[0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84]和wstETH合约[0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0]；测试网goerli的合约[0x1643E812aE58766192Cf7D2Cf9567dF2C37e9B7F]和wstETH合约[0x6320cD32aA674d2898A68ec82e869385Fc5f7E2f]。'}"></TextBlock>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='stETH Token是以前质押ETH后在当前可以取出的金额，当然现在（2022年10月）ETH2.0质押还没开放提现功能；其数量是不断增长的，当前年化增长约5.4%，以官方网站为准。'}"></TextBlock>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='wstETH Token是质押ETH时候获取的份额，其数量不变；wstETH对应一定数量的stETH，对应的stETH数量不断增长。'}"></TextBlock>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='stETH 和 wstETH 的详细情况可以参考官网文档。'}"></TextBlock>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='交易一般使用 wstETH ，定价一般使用 stETH, 这两者之间可以彼此转换。本质上stETH不适合uniswap[V2/V3]类流动性交易所，流动性提供者会被损失；严格说来wstETH也不适合目前的uniswap[V2/V3]类流动性交易所，因为wstETH相对ETH来说是在不停升值，但升值幅度较小（约年化5%），也能容忍。stETH这类基数不停增加的Token需要专用的交易所；wstETH这类不断升值的Token也需要专用的交易所；以后我们可能会提供这类交易所。'}"></TextBlock>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='本客户端提供的目的是方便部分客户的操作和满足某些安全性需求。'}"></TextBlock>
+                <Button Content="Go To https://lido.fi/" Click="GotoLidoWebSite_Clidk" Width="300"></Button>
+            </StackPanel>
+
+        </TabItem>
+
+    </TabControl>
+</Window>

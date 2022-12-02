@@ -1,0 +1,234 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Contract\Address\**" />
+    <Compile Remove="Contract\bin\**" />
+    <Compile Remove="Contract\ContractCreate2\**" />
+    <Compile Remove="Contract\Create2\**" />
+    <Compile Remove="Contract\IBatchTransfer\**" />
+    <Compile Remove="Contract\IERC20\**" />
+    <Compile Remove="Contract\SafeERC20\**" />
+    <Compile Remove="Contract\Strings\**" />
+    <Compile Remove="Contract\Test\**" />
+    <Compile Remove="Contract\WalletHelper\**" />
+    <EmbeddedResource Remove="Contract\Address\**" />
+    <EmbeddedResource Remove="Contract\bin\**" />
+    <EmbeddedResource Remove="Contract\ContractCreate2\**" />
+    <EmbeddedResource Remove="Contract\Create2\**" />
+    <EmbeddedResource Remove="Contract\IBatchTransfer\**" />
+    <EmbeddedResource Remove="Contract\IERC20\**" />
+    <EmbeddedResource Remove="Contract\SafeERC20\**" />
+    <EmbeddedResource Remove="Contract\Strings\**" />
+    <EmbeddedResource Remove="Contract\Test\**" />
+    <EmbeddedResource Remove="Contract\WalletHelper\**" />
+    <None Remove="Contract\Address\**" />
+    <None Remove="Contract\bin\**" />
+    <None Remove="Contract\ContractCreate2\**" />
+    <None Remove="Contract\Create2\**" />
+    <None Remove="Contract\IBatchTransfer\**" />
+    <None Remove="Contract\IERC20\**" />
+    <None Remove="Contract\SafeERC20\**" />
+    <None Remove="Contract\Strings\**" />
+    <None Remove="Contract\Test\**" />
+    <None Remove="Contract\WalletHelper\**" />
+    <Page Remove="Contract\Address\**" />
+    <Page Remove="Contract\bin\**" />
+    <Page Remove="Contract\ContractCreate2\**" />
+    <Page Remove="Contract\Create2\**" />
+    <Page Remove="Contract\IBatchTransfer\**" />
+    <Page Remove="Contract\IERC20\**" />
+    <Page Remove="Contract\SafeERC20\**" />
+    <Page Remove="Contract\Strings\**" />
+    <Page Remove="Contract\Test\**" />
+    <Page Remove="Contract\WalletHelper\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="AppState.cs" />
+    <Compile Remove="BLL\CasinoToken.cs" />
+    <Compile Remove="BLL\Class1.cs" />
+    <Compile Remove="BLL\Erc20TokenApprove.cs" />
+    <Compile Remove="BLL\Tools.cs" />
+    <Compile Remove="BLL\WalletHelper.cs" />
+    <Compile Remove="BlockChainNoticeId.cs" />
+    <Compile Remove="Contract\AppInfo.cs" />
+    <Compile Remove="Contract\Tools.cs" />
+    <Compile Remove="Erc20TokenApprove.cs" />
+    <Compile Remove="MessageId.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Image\account.jpg" />
+    <None Remove="Image\AccountPassword.jpg" />
+    <None Remove="Image\Auction.png" />
+    <None Remove="Image\bianji.png" />
+    <None Remove="Image\cal.png" />
+    <None Remove="Image\cal1.png" />
+    <None Remove="Image\caozuo2.png" />
+    <None Remove="Image\CasinoToken.png" />
+    <None Remove="Image\copyaddress.jfif" />
+    <None Remove="Image\Crowdfund.jpg" />
+    <None Remove="Image\daochu.png" />
+    <None Remove="Image\database.png" />
+    <None Remove="Image\developer.jpg" />
+    <None Remove="Image\erweima.png" />
+    <None Remove="Image\gas-price.png" />
+    <None Remove="Image\guanyu.png" />
+    <None Remove="Image\lishi.png" />
+    <None Remove="Image\multi-language.ico" />
+    <None Remove="Image\Multilingual.jfif" />
+    <None Remove="Image\net2.jpg" />
+    <None Remove="Image\Notice.jpg" />
+    <None Remove="Image\Per.png" />
+    <None Remove="Image\shanchu.png" />
+    <None Remove="Image\shezhi.png" />
+    <None Remove="Image\shurumima.png" />
+    <None Remove="Image\token.png" />
+    <None Remove="Image\tools.png" />
+    <None Remove="Image\treasurechesticon.png" />
+    <None Remove="Image\tuichu.png" />
+    <None Remove="Image\web3.png" />
+    <None Remove="Image\youxi.png" />
+    <None Remove="Image\zhuangtai.png" />
+    <None Remove="TokenIcon\binanceusd_32.png" />
+    <None Remove="TokenIcon\bnb_28_2.png" />
+    <None Remove="TokenIcon\dai_stablecoin.png" />
+    <None Remove="TokenIcon\Eth.png" />
+    <None Remove="TokenIcon\NoJPG.png" />
+    <None Remove="TokenIcon\stETH28.png" />
+    <None Remove="TokenIcon\USDC.png" />
+    <None Remove="TokenIcon\Usdt.png" />
+    <None Remove="TokenIcon\wbtc28.png" />
+    <None Remove="TokenIcon\weth.png" />
+    <None Remove="TokenIcon\weth1.png" />
+    <None Remove="TokenIcon\wstETH.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="TokenIcon\bnb_28_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="TokenIcon\NoJPG.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="TokenIcon\Eth.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <PackageReference Include="ZXing.Net" Version="0.16.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlockChain.Common\BlockChain.Common.csproj" />
+    <ProjectReference Include="..\Nethereum.Uniswap-V2-and-V3-main\Nethereum.Uniswap\Nethereum.Uniswap.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Image\account.jpg" />
+    <Resource Include="Image\AccountPassword.jpg" />
+    <Resource Include="Image\Auction.png" />
+    <Resource Include="Image\bianji.png" />
+    <Resource Include="Image\cal.png" />
+    <Resource Include="Image\cal1.png" />
+    <Resource Include="Image\caozuo2.png" />
+    <Resource Include="Image\CasinoToken.png" />
+    <Resource Include="Image\copyaddress.jfif" />
+    <Resource Include="Image\Crowdfund.jpg" />
+    <Resource Include="Image\daochu.png" />
+    <Resource Include="Image\database.png" />
+    <Resource Include="Image\developer.jpg" />
+    <Resource Include="Image\erweima.png" />
+    <Resource Include="Image\gas-price.png" />
+    <Resource Include="Image\guanyu.png" />
+    <Resource Include="Image\lishi.png" />
+    <Resource Include="Image\multi-language.ico" />
+    <Resource Include="Image\net2.jpg" />
+    <Resource Include="Image\Notice.jpg" />
+    <Resource Include="Image\Per.png" />
+    <Resource Include="Image\shanchu.png" />
+    <Resource Include="Image\shezhi.png" />
+    <Resource Include="Image\shurumima.png" />
+    <Resource Include="Image\token.png" />
+    <Resource Include="Image\tools.png" />
+    <Resource Include="Image\treasurechesticon.png" />
+    <Resource Include="Image\tuichu.png" />
+    <Resource Include="Image\web3.png" />
+    <Resource Include="Image\youxi.png" />
+    <Resource Include="Image\zhuangtai.png" />
+    <Resource Include="TokenIcon\binanceusd_32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="TokenIcon\dai_stablecoin.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="TokenIcon\stETH28.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="TokenIcon\USDC.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="TokenIcon\Usdt.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="TokenIcon\wbtc28.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="TokenIcon\weth.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="TokenIcon\weth1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="TokenIcon\wstETH.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Contract\2.0.AppInfo.sol">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Contract\Multicall3.sol">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Contract\WETH9.sol">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="UserData\ReadMe.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Pager.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+</Project>

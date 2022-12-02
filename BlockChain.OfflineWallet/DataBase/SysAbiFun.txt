@@ -1,0 +1,31 @@
+﻿
+
+INSERT [dbo].[AbiFunction] ([FunId], [FunctionFullName], [Remark], [FunctionFullNameHash], [FunctionFullNameHash4], [IsSysDefine], [IsTestOk], [IsEthTransfer]) VALUES (N'6ada3ecd-9adf-4c85-8210-19a16e58ecac', N'approve(address,uint256)', N'ERC20 Approve', N'095ea7b334ae44009aa867bfb386f5c3b4b443ac6f0ee573fa91c4608fbadfba', N'0x095ea7b3', 1, 0, 0)
+GO
+INSERT [dbo].[AbiFunction] ([FunId], [FunctionFullName], [Remark], [FunctionFullNameHash], [FunctionFullNameHash4], [IsSysDefine], [IsTestOk], [IsEthTransfer]) VALUES (N'25b2e1a5-17d8-4218-b5fc-79b209d97a92', N'approve(address,uint256)', N'NFT Approve', N'095ea7b334ae44009aa867bfb386f5c3b4b443ac6f0ee573fa91c4608fbadfba', N'0x095ea7b3', 1, 0, 0)
+GO
+INSERT [dbo].[AbiFunction] ([FunId], [FunctionFullName], [Remark], [FunctionFullNameHash], [FunctionFullNameHash4], [IsSysDefine], [IsTestOk], [IsEthTransfer]) VALUES (N'43813374-2e66-4bdf-8fe1-883b50b51cf0', N'transfer(address,uint256)', N'ERC20 Transfer', N'a9059cbb2ab09eb219583f4a59a5d0623ade346d962bcd4e46b11da047c9049b', N'0xa9059cbb', 1, 0, 0)
+GO
+INSERT [dbo].[AbiFunction] ([FunId], [FunctionFullName], [Remark], [FunctionFullNameHash], [FunctionFullNameHash4], [IsSysDefine], [IsTestOk], [IsEthTransfer]) VALUES (N'c068f5f9-cf4c-437a-97ed-d80a678b2316', N'Eth_Transfer', N'ETH Transfer', N'c43a4abb7fbee9b88f34a9cea081b25819f57e40381ad33f0dd68bb801bc4a94', N'0x', 1, 0, 1)
+GO
+INSERT [dbo].[AbiFunction] ([FunId], [FunctionFullName], [Remark], [FunctionFullNameHash], [FunctionFullNameHash4], [IsSysDefine], [IsTestOk], [IsEthTransfer]) VALUES (N'9caea6e7-0d83-4df9-907e-dcbc99535ec4', N'safeTransferFrom(address,address,uint256)', N'NFT Transfer', N'42842e0eb38857a7775b4e7364b2775df7325074d088e7fb39590cd6281184ed', N'0x42842e0e', 1, 0, 0)
+GO
+
+INSERT [dbo].[AbiParamer] ([FunId], [ParamerType], [ParamerName], [ParamerOrder]) VALUES (N'6ada3ecd-9adf-4c85-8210-19a16e58ecac', N'address', N'spender', 1)
+GO
+INSERT [dbo].[AbiParamer] ([FunId], [ParamerType], [ParamerName], [ParamerOrder]) VALUES (N'6ada3ecd-9adf-4c85-8210-19a16e58ecac', N'uint256', N'amount', 2)
+GO
+INSERT [dbo].[AbiParamer] ([FunId], [ParamerType], [ParamerName], [ParamerOrder]) VALUES (N'25b2e1a5-17d8-4218-b5fc-79b209d97a92', N'address', N'to', 1)
+GO
+INSERT [dbo].[AbiParamer] ([FunId], [ParamerType], [ParamerName], [ParamerOrder]) VALUES (N'25b2e1a5-17d8-4218-b5fc-79b209d97a92', N'uint256', N'tokenId', 2)
+GO
+INSERT [dbo].[AbiParamer] ([FunId], [ParamerType], [ParamerName], [ParamerOrder]) VALUES (N'43813374-2e66-4bdf-8fe1-883b50b51cf0', N'address', N'to', 1)
+GO
+INSERT [dbo].[AbiParamer] ([FunId], [ParamerType], [ParamerName], [ParamerOrder]) VALUES (N'43813374-2e66-4bdf-8fe1-883b50b51cf0', N'uint256', N'amount', 2)
+GO
+INSERT [dbo].[AbiParamer] ([FunId], [ParamerType], [ParamerName], [ParamerOrder]) VALUES (N'9caea6e7-0d83-4df9-907e-dcbc99535ec4', N'address', N'from', 1)
+GO
+INSERT [dbo].[AbiParamer] ([FunId], [ParamerType], [ParamerName], [ParamerOrder]) VALUES (N'9caea6e7-0d83-4df9-907e-dcbc99535ec4', N'address', N'to', 2)
+GO
+INSERT [dbo].[AbiParamer] ([FunId], [ParamerType], [ParamerName], [ParamerOrder]) VALUES (N'9caea6e7-0d83-4df9-907e-dcbc99535ec4', N'uint256', N'tokenId', 3)
+GO

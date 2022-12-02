@@ -1,0 +1,218 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <SignAssembly>False</SignAssembly>
+    <UseWindowsForms>True</UseWindowsForms>
+    <AssemblyName>OfflineWallet</AssemblyName>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Remove="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="BLL\Class1.cs" />
+    <Compile Remove="BLL\Erc20FunSigCode.cs" />
+    <Compile Remove="BLL\Erc20TokenApprove.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="favicon.ico" />
+    <None Remove="Image\BackUp.png" />
+    <None Remove="Image\bianji.png" />
+    <None Remove="Image\bushu.png" />
+    <None Remove="Image\cal.png" />
+    <None Remove="Image\cal1.png" />
+    <None Remove="Image\caozuo2.png" />
+    <None Remove="Image\daochu.png" />
+    <None Remove="Image\daoru1.png" />
+    <None Remove="Image\daoru2.png" />
+    <None Remove="Image\daoru3.png" />
+    <None Remove="Image\database.png" />
+    <None Remove="Image\erweima.png" />
+    <None Remove="Image\fun.jpg" />
+    <None Remove="Image\function.png" />
+    <None Remove="Image\guanyu.png" />
+    <None Remove="Image\iconfilter.jpg" />
+    <None Remove="Image\lishi.png" />
+    <None Remove="Image\list.jpg" />
+    <None Remove="Image\list1.jpg" />
+    <None Remove="Image\liulan.png" />
+    <None Remove="Image\lixian.png" />
+    <None Remove="Image\multi-language.ico" />
+    <None Remove="Image\nft.jpg" />
+    <None Remove="Image\Notice.jpg" />
+    <None Remove="Image\Refresh.png" />
+    <None Remove="Image\Restore.png" />
+    <None Remove="Image\SendMessage.jpg" />
+    <None Remove="Image\shanchu.png" />
+    <None Remove="Image\shengchan.png" />
+    <None Remove="Image\shezhi.png" />
+    <None Remove="Image\shuaxin.png" />
+    <None Remove="Image\sig.png" />
+    <None Remove="Image\thank-you-ico.png" />
+    <None Remove="Image\tianjia.png" />
+    <None Remove="Image\token.png" />
+    <None Remove="Image\tools.png" />
+    <None Remove="Image\treasurechesticon.png" />
+    <None Remove="Image\tuichu.png" />
+    <None Remove="Image\Uniswap.PNG" />
+    <None Remove="Image\web3.png" />
+    <None Remove="Image\xinzeng.png" />
+    <None Remove="Image\xinzeng1.png" />
+    <None Remove="Image\xinzeng2.png" />
+    <None Remove="Image\xuanze1.png" />
+    <None Remove="Image\youxi.png" />
+    <None Remove="Image\zhuangtai.png" />
+    <None Remove="Image\zhuanzhang.png" />
+    <None Remove="SplashScreen.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="favicon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nethereum.HdWallet" Version="4.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlockChain.Common\BlockChain.Common.csproj" />
+    <ProjectReference Include="..\BlockChain.OfflineWallet.DataSig\BlockChain.OfflineWallet.DataSig.csproj" />
+    <ProjectReference Include="..\BlockChain.Share\BlockChain.Share.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Image\BackUp.png" />
+    <Resource Include="Image\bianji.png" />
+    <Resource Include="Image\bushu.png" />
+    <Resource Include="Image\cal.png" />
+    <Resource Include="Image\cal1.png" />
+    <Resource Include="Image\caozuo2.png" />
+    <Resource Include="Image\daochu.png" />
+    <Resource Include="Image\daoru1.png" />
+    <Resource Include="Image\daoru2.png" />
+    <Resource Include="Image\daoru3.png" />
+    <Resource Include="Image\database.png" />
+    <Resource Include="Image\erweima.png" />
+    <Resource Include="Image\fun.jpg" />
+    <Resource Include="Image\function.png" />
+    <Resource Include="Image\guanyu.png" />
+    <Resource Include="Image\iconfilter.jpg" />
+    <Resource Include="Image\lishi.png" />
+    <Resource Include="Image\list.jpg" />
+    <Resource Include="Image\list1.jpg" />
+    <Resource Include="Image\liulan.png" />
+    <Resource Include="Image\lixian.png" />
+    <Resource Include="Image\multi-language.ico" />
+    <Resource Include="Image\nft.jpg" />
+    <Resource Include="Image\Notice.jpg" />
+    <Resource Include="Image\Refresh.png" />
+    <Resource Include="Image\Restore.png" />
+    <Resource Include="Image\SendMessage.jpg" />
+    <Resource Include="Image\shanchu.png" />
+    <Resource Include="Image\shengchan.png" />
+    <Resource Include="Image\shezhi.png" />
+    <Resource Include="Image\shuaxin.png" />
+    <Resource Include="Image\sig.png" />
+    <Resource Include="Image\thank-you-ico.png" />
+    <Resource Include="Image\tianjia.png" />
+    <Resource Include="Image\token.png" />
+    <Resource Include="Image\tools.png" />
+    <Resource Include="Image\treasurechesticon.png" />
+    <Resource Include="Image\tuichu.png" />
+    <Resource Include="Image\Uniswap.PNG" />
+    <Resource Include="Image\web3.png" />
+    <Resource Include="Image\xinzeng.png" />
+    <Resource Include="Image\xinzeng1.png" />
+    <Resource Include="Image\xinzeng2.png" />
+    <Resource Include="Image\xuanze1.png" />
+    <Resource Include="Image\youxi.png" />
+    <Resource Include="Image\zhuangtai.png" />
+    <Resource Include="Image\zhuanzhang.png" />
+    <Resource Include="SplashScreen.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="BackUp\InputDataForSig.Simple.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DataBase\Create.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DataBase\OfflineWalletDb.mdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DataBase\OfflineWalletDb_log.ldf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="DataBase\SysAbiFun.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="WindowAddContact.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WindowExportHDAddress.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WindowExportPrivateKey.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WindowHDGenAddress.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WindowLoadMnemonic.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WindowModifyPassword.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WindowNewKeyStore.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WindowNewMnemonic.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WindowRestorePassword.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+</Project>

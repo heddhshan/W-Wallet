@@ -1,0 +1,51 @@
+﻿<Window x:Class="BlockChain.Share.WindowDbSet"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.Share"       
+        mc:Ignorable="d"  Icon="Image\database.png"
+        Title="SqlServer DataBase Connection" Height="600" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
+
+    <Window.Resources>
+        <local:LanguageHelper x:Key="LanguageHelper"></local:LanguageHelper>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="2" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Margin" Value="10,0" />
+        </Style>        
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="10,0,0,0" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="Width" Value="100" />
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="The Program Uses the Sql Server Database, If the system does not have SqlServer (Express) installed, you need to go to the Microsoft website to download and install it, It is recommended to download the Express version and install LocalDB."  TextWrapping="Wrap" VerticalAlignment="Center"></TextBlock>
+
+        <Button  Grid.Row="1"  Margin="30,3" Content="Go To Sql Server DownLoad Page: https://www.microsoft.com/en-us/sql-server/sql-server-downloads" Click="GotoPage_Click" Width="auto"></Button>
+        <!--<StackPanel Grid.Row="1" VerticalAlignment="Center">
+            <Button Margin="30,3" Content="Go To Sql Server DownLoad Page: https://www.microsoft.com/en-us/sql-server/sql-server-downloads" Click="GotoPage_Click" Width="auto"></Button>
+            <Button Margin="30,3" Content="DownLoad Sql Server Express: https://go.microsoft.com/fwlink/p/?linkid=866658" Click="DownLoadExpress_Click" Width="auto"></Button>
+        </StackPanel>-->
+        
+        <Label Grid.Row="2" Content="Enter the database connection string below:" ></Label>
+        <TextBox x:Name="TextBoxDbStr" TextWrapping="Wrap" Grid.Row="3" ></TextBox>
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Test" Click="OnTest"></Button>
+            <Button Content="OK" Click="OnOk"></Button>
+        </StackPanel>
+        
+    </Grid>
+</Window>

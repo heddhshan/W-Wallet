@@ -1,0 +1,206 @@
+﻿<Window x:Class="BlockChain.Wallet.WindowExeOffTx"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.Wallet"
+        mc:Ignorable="d" Icon="Image\offdata.png" 
+        Title="执行离线签名" MinHeight="600" MinWidth="800"  Height="600" Width="800"  WindowStartupLocation="CenterScreen">
+
+
+    <Window.Resources>
+        <local:LanguageHelper x:Key="LanguageHelper"></local:LanguageHelper>
+
+        <Style TargetType="Label">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="2" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="35" ></Setter>
+            <Setter Property="Width" Value="160" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+        </Style>
+
+
+        <Style x:Key="TextStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5" />
+        </Style>
+
+        <Style x:Key="NumberStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10,5" />
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+
+        <Style x:Key="NumberStyle2" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+
+        
+
+    </Window.Resources>
+
+    <Grid  Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>            
+            <RowDefinition></RowDefinition>
+            <RowDefinition  Height="50"></RowDefinition>           
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" VerticalAlignment="Center" Text="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='请输入离线签名事务，多个事务换行分开。'}"  TextWrapping="Wrap"></TextBlock>
+            <Button Grid.Row="0" HorizontalAlignment="Right" Content="Load File" Click="LoadFile_Click"></Button>
+
+            <TextBox x:Name="TextBoxTx" Grid.Row="1" TextChanged="OnTextChanged" AcceptsReturn="True"  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"></TextBox>
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="100"></RowDefinition>
+                <RowDefinition  Height="100"></RowDefinition>
+                <RowDefinition  Height="100"></RowDefinition>
+                <RowDefinition  Height="40"></RowDefinition>
+                <RowDefinition  Height="40"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0"  Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='> 解析离线签名 >'}" Click="OnPraseOffTx" HorizontalAlignment="Center"></Button>
+
+            <Button Grid.Row="1"  Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='执行解析的离线签名'}" Click="OnExeOffTx" HorizontalAlignment="Center"></Button>
+
+            <Button x:Name="ButtonExeOffTxUrl1" Grid.Row="3"   Content="Web broadcast transaction 1" Tag="https://etherscan.io/pushTx"  Click="OnGotoUrl"  Foreground="Blue" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ></Button>
+            <Button x:Name="ButtonExeOffTxUrl2" Grid.Row="4"   Content="Web broadcast transaction 2" Tag="https://app.mycrypto.com/broadcast-transaction"  Click="OnGotoUrl"  Foreground="Blue" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ></Button>
+            <!--<Label Name="LabelResult" Grid.Row="3" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='执行结果'}"></Label>-->
+        </Grid>
+
+
+        <Grid Grid.Row="0" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" VerticalAlignment="Center" Text="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='离线签名事务列表：'}"  TextWrapping="Wrap"></TextBlock>
+
+
+            <DataGrid x:Name="DataGridCommonTxSig" Grid.Row="1"  AutoGenerateColumns="False" CanUserAddRows="False"   SelectionMode="Single">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Index" Binding="{Binding IndexId}"  IsReadOnly="True"  ElementStyle="{StaticResource NumberStyle}" ></DataGridTextColumn>
+
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.Header>
+                            <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='选择'}"  />
+                        </DataGridTemplateColumn.Header>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox  IsChecked="{Binding IsSelected, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding HasEnoughEth}" VerticalAlignment="Center" HorizontalAlignment="Center"></CheckBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn Header="ChainId" Binding="{Binding ChainId}"  IsReadOnly="True"  ElementStyle="{StaticResource NumberStyle}"></DataGridTextColumn>
+                    <!--<DataGridTextColumn Header="From" Binding="{Binding From}"  IsReadOnly="True" ElementStyle="{StaticResource TextStyle}"></DataGridTextColumn>-->
+                    <DataGridTemplateColumn Header="From">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding From}" Click="OnGotoAddress" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Foreground="Blue"></Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn  Binding="{Binding Nonce}"  IsReadOnly="True"  ElementStyle="{StaticResource NumberStyle2}"  Foreground="Red">
+                        <DataGridTextColumn.Header>
+                            <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='执行Nonce'}"></Label>
+                        </DataGridTextColumn.Header>                        
+                    </DataGridTextColumn>
+                    
+                    <DataGridTextColumn  Binding="{Binding CurrrentNonce}"  IsReadOnly="True"  ElementStyle="{StaticResource NumberStyle2}" Foreground="Blue">
+                        <DataGridTextColumn.Header>
+                            <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='当前Nonce'}"></Label>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                
+                    <DataGridTextColumn Header="EthAmount(Wei)" Binding="{Binding EthWeiAmount}"  IsReadOnly="True"  ElementStyle="{StaticResource NumberStyle}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="EthEstimate Transaction Fee(Wei)" Binding="{Binding TransactionFee}"  IsReadOnly="True" ElementStyle="{StaticResource NumberStyle}"></DataGridTextColumn>
+                    <!--<DataGridTextColumn Header="From Eth Balance(Wei)" Binding="{Binding EthBalance}"  IsReadOnly="True" ElementStyle="{StaticResource NumberStyle}"></DataGridTextColumn>-->
+                    <DataGridTemplateColumn >
+                        <DataGridTemplateColumn.Header>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Content="From Eth Balance(Wei)" HorizontalAlignment="Right"></Label>
+                                <Button Grid.Column="1" Content="Refresh" Click="RefreshEth_Click" Width="100" HorizontalAlignment="Left"></Button>
+                            </Grid>
+                        </DataGridTemplateColumn.Header>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                      <Label Content="{Binding EthBalance}" HorizontalAlignment="Right"></Label>       
+                                </Grid>                                           
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>                    
+
+                    <!--<DataGridTextColumn Header="To" Binding="{Binding To}"  IsReadOnly="True" ElementStyle="{StaticResource TextStyle}"></DataGridTextColumn>-->
+                    <DataGridTemplateColumn Header="To">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding To}" Click="OnGotoAddress" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Foreground="Blue"></Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                     
+                    <DataGridTextColumn Header="GasLimit" Binding="{Binding GasLimit}"  IsReadOnly="True"  ElementStyle="{StaticResource NumberStyle}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="MaxFeePerGas" Binding="{Binding MaxFeePerGas}"  IsReadOnly="True"  ElementStyle="{StaticResource NumberStyle}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="MaxPriorityFeePerGas" Binding="{Binding MaxPriorityFeePerGas}"  IsReadOnly="True"  ElementStyle="{StaticResource NumberStyle}"></DataGridTextColumn>
+
+                    <DataGridTemplateColumn Header="InputData" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox  Text="{Binding InputData}"  VerticalContentAlignment="Top"
+                                                  TextWrapping="Wrap"  AcceptsReturn="True"  VerticalScrollBarVisibility="Visible" Margin="3" Height="50" IsReadOnly="True"></TextBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Sig Data"  Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox  Text="{Binding SigData, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"   VerticalContentAlignment="Top"
+                                                  TextWrapping="Wrap"  AcceptsReturn="True"  VerticalScrollBarVisibility="Visible" Margin="3" Height="50" IsReadOnly="True"></TextBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Transaction Hash">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding TransactionHash}"  Click="OnGotoTx" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Foreground="Blue"></Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+
+
+        <Button Grid.Row="1" Grid.Column="2" Content="Close" Click="Close_Click"></Button>
+    </Grid>
+
+</Window>

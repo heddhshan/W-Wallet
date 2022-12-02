@@ -1,0 +1,284 @@
+﻿<Window x:Class="BlockChain.Share.WindowCalculateTools"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.Share"
+        mc:Ignorable="d" ResizeMode="NoResize" Icon="Image\cal.png"
+        Title="常用离线计算工具" MinHeight="600" MinWidth="800"  Height="600" Width="800"  WindowStartupLocation="CenterScreen">
+
+
+    <Window.Resources>
+        <local:LanguageHelper x:Key="LanguageHelper"></local:LanguageHelper>
+
+        <Style TargetType="Label">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="2" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="35" ></Setter>
+            <Setter Property="Width" Value="160" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+        </Style>
+
+    </Window.Resources>
+
+    <TabControl>
+
+        <TabItem Header="1，Calculate signature" >
+
+            <StackPanel Height="500" Width="760" VerticalAlignment="Top" Margin="10">
+                <GroupBox Header="1, function signature"  Margin="10">
+                    <Grid  Height="150">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Content="function:"></Label>
+                        <TextBox x:Name="TextBoxFun" Grid.Row="0" Grid.Column="1" Text="transfer(address,uint256)" Height="35" VerticalAlignment="Center" VerticalContentAlignment="Center"></TextBox>
+
+                        <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="Calculate ⏬" HorizontalAlignment="Center" Click="OnClickFS"></Button>
+
+                        <Label Grid.Row="2" Grid.Column="0" Content="function sig:"></Label>
+                        <TextBox x:Name="TextBoxSig" Grid.Row="2" Grid.Column="1" Text="" IsReadOnly="True" Height="35" VerticalAlignment="Center" VerticalContentAlignment="Center"></TextBox>
+
+                    </Grid>
+
+                </GroupBox>
+
+                <GroupBox Header="2, event signature"  Margin="10">
+                    <Grid  Height="150">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Content="event:"></Label>
+                        <TextBox x:Name="TextBoxEvent" Grid.Row="0" Grid.Column="1" Text="OnWithdrawFrom(address,address,uint256,uint256) " Height="35" VerticalAlignment="Center" VerticalContentAlignment="Center"></TextBox>
+
+                        <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="Calculate ⏬" HorizontalAlignment="Center" Click="OnClickES"></Button>
+
+                        <Label Grid.Row="2" Grid.Column="0" Content="event sig:"></Label>
+                        <TextBox x:Name="TextBoxEventSig" Grid.Row="2" Grid.Column="1" Text="" IsReadOnly="True" Height="35" VerticalAlignment="Center" VerticalContentAlignment="Center"></TextBox>
+
+                    </Grid>
+
+                </GroupBox>
+
+
+            </StackPanel>
+        </TabItem>
+
+        <TabItem Header="2, DateTime Convert">
+
+            <Grid Height="200" VerticalAlignment="Top" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <!--<RowDefinition></RowDefinition>-->
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Local DateTime：" HorizontalAlignment="Right"></Label>
+                <TextBox x:Name="TextBoxLocalDt" Grid.Row="0" Grid.Column="1" Height="35" VerticalContentAlignment="Center"></TextBox>
+                <!--<Label Grid.Row="1" Grid.Column="0" Content="UTC DateTime：" HorizontalAlignment="Right"></Label>
+                <TextBox x:Name="TextBoxUtcDt" Grid.Row="1" Grid.Column="1"></TextBox>-->
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <Button Height="90" Width="45" Margin="10,0" Click="ToUnix_Click">
+                        <StackPanel>
+                            <Label Content="˅" ></Label>
+                            <Label Content="˅" ></Label>
+                            <Label Content="˅" ></Label>
+                        </StackPanel>
+                    </Button>
+                    <Button Height="90" Width="45" Margin="10,0" Click="ToDateTime_Click">
+                        <StackPanel>
+                            <Label Content="˄" ></Label>
+                            <Label Content="˄" ></Label>
+                            <Label Content="˄" ></Label>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <Label Grid.Row="2" Grid.Column="0" Content="Unix Epoch：" HorizontalAlignment="Right"></Label>
+                <TextBox x:Name="TextBoxUnixDt" Grid.Row="2" Grid.Column="1" Height="35" VerticalContentAlignment="Center"></TextBox>
+                
+            </Grid>
+            
+        </TabItem>
+
+        <TabItem Header="3, String To Hex">
+
+            <Grid Height="300" VerticalAlignment="Top" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Sting：" HorizontalAlignment="Right"></Label>
+                <TextBox x:Name="TextBoxString" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True"></TextBox>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <Button Height="90" Width="45" Margin="10,0" Click="ToHex_Click">
+                        <StackPanel>
+                            <Label Content="˅" ></Label>
+                            <Label Content="˅" ></Label>
+                            <Label Content="˅" ></Label>
+                        </StackPanel>
+                    </Button>
+                    <Button Height="90" Width="45" Margin="10,0" Click="ToString_Click">
+                        <StackPanel>
+                            <Label Content="˄" ></Label>
+                            <Label Content="˄" ></Label>
+                            <Label Content="˄" ></Label>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <Label Grid.Row="2" Grid.Column="0" Content="Hex：" HorizontalAlignment="Right"></Label>
+                <TextBox x:Name="TextBoxHex" Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" AcceptsReturn="True"></TextBox>
+
+            </Grid>
+
+        </TabItem>
+
+        <TabItem Header="4.1，Generate Signature">
+
+            <Grid Height="280" Width="760" VerticalAlignment="Top" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Generate Signature" Grid.ColumnSpan="2" HorizontalAlignment="Center"></Label>
+                <Label  Grid.Row="1" Grid.Column="0" Content="Hash"></Label>
+                <TextBox x:Name="TextBoxHash"  Grid.Row="1" Grid.Column="1" Text="0x9c22ff5f21f0b81b113e63f7db6da94fedef11b2119b4088b89664fb9a3cb658" VerticalAlignment="Center"></TextBox>
+                <Label  Grid.Row="2" Grid.Column="0" Content="PrivateKey"></Label>
+                <TextBox x:Name="TextBoxPrivateKey"  Grid.Row="2" Grid.Column="1" Text="0xb5b1870957d373ef0eeffecc6e4812c0fd08f554b37b233526acc331bf1544f7" VerticalAlignment="Center" LostFocus="TextBoxPrivateKey_LostFocus"></TextBox>
+                <Label  Grid.Row="3" Grid.Column="0" Content="Address:"></Label>
+                <Label x:Name="LabelAddressFP"  Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"></Label>
+
+                <Button   Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="2" HorizontalAlignment="Center" Content="Generate ⏬" Click="OnSignature"></Button>
+                <Label  Grid.Row="5" Grid.Column="0" Content="Signature"></Label>
+                <TextBox x:Name="TextBoxSignature" Grid.Row="5" Grid.Column="1" Text="" TextWrapping="Wrap" IsReadOnly="True"></TextBox>
+            </Grid>
+
+        </TabItem>
+
+        <TabItem Header="4.2，Recover Address">
+
+            <Grid Height="280" Width="760" VerticalAlignment="Top" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Recover Address" Grid.ColumnSpan="2" HorizontalAlignment="Center"></Label>
+                <Label  Grid.Row="1" Grid.Column="0" Content="Hash"></Label>
+                <TextBox x:Name="TextBoxHash1"  Grid.Row="1" Grid.Column="1" Text="0x9c22ff5f21f0b81b113e63f7db6da94fedef11b2119b4088b89664fb9a3cb658" VerticalAlignment="Center"></TextBox>
+                <Label  Grid.Row="2" Grid.Column="0" Content="Signature"></Label>
+                <TextBox x:Name="TextBoxSignature1" Grid.Row="2" Grid.Column="1" Text="0xaf0cffa16d6fd31646a690d5280ba936eacc9482242291df53f75bea949bfe593f6da44699f3587b2abf43e880907b1e0d83e468dd937674faa7c618d5a8f9b51c" TextWrapping="Wrap"></TextBox>
+                <Button   Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="2" HorizontalAlignment="Center" Content="Generate ⏬" Click="OnRecover"></Button>
+                <Label  Grid.Row="4" Grid.Column="0" Content="Address:"></Label>
+                <TextBox x:Name="TextBoxAddress"  Grid.Row="4" Grid.Column="1" Text="" IsReadOnly="True" VerticalAlignment="Center"></TextBox>
+            </Grid>
+
+        </TabItem>
+
+
+        <TabItem Header="5.1，Hash And Sign">
+
+            <Grid Height="320" Width="760" VerticalAlignment="Top" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Hash And Sign" Grid.ColumnSpan="2" HorizontalAlignment="Center"></Label>
+                <Label  Grid.Row="1" Grid.Column="0" Content="Plain Message:"></Label>
+                <TextBox x:Name="TextBoxPlainMessage"  Grid.Row="1" Grid.Column="1" Text=""  TextWrapping="Wrap"  AcceptsReturn="True"></TextBox>
+                <Label  Grid.Row="2" Grid.Column="0" Content="PrivateKey:"></Label>
+                <TextBox x:Name="TextBoxPrivateKey41"  Grid.Row="2" Grid.Column="1" Text="0xb5b1870957d373ef0eeffecc6e4812c0fd08f554b37b233526acc331bf1544f7" VerticalAlignment="Center" LostFocus="TextBoxPrivateKey41_LostFocus"></TextBox>
+                <Label  Grid.Row="3" Grid.Column="0" Content="Address:"></Label>
+                <Label x:Name="LabelAddressFP41"  Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"></Label>
+
+                <Button   Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="2" HorizontalAlignment="Center" Content="Generate ⏬" Click="OnSignature41"></Button>
+                <Label  Grid.Row="5" Grid.Column="0" Content="Signature"></Label>
+                <TextBox x:Name="TextBoxSignature41" Grid.Row="5" Grid.Column="1" Text="" TextWrapping="Wrap" IsReadOnly="True"></TextBox>
+            </Grid>
+
+        </TabItem>
+
+        <TabItem Header="5.2，Hash And EcRecover">
+
+            <Grid Height="280" Width="760" VerticalAlignment="Top" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition  Height="2*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Hash And EcRecover" Grid.ColumnSpan="2" HorizontalAlignment="Center"></Label>
+                <Label  Grid.Row="1" Grid.Column="0" Content="Plain Message："></Label>
+                <TextBox x:Name="TextBoxPlainMessage42"  Grid.Row="1" Grid.Column="1" Text="" TextWrapping="Wrap"></TextBox>
+                <Label  Grid.Row="2" Grid.Column="0" Content="Signature"></Label>
+                <TextBox x:Name="TextBoxSignature42" Grid.Row="2" Grid.Column="1" Text="0xaf0cffa16d6fd31646a690d5280ba936eacc9482242291df53f75bea949bfe593f6da44699f3587b2abf43e880907b1e0d83e468dd937674faa7c618d5a8f9b51c" TextWrapping="Wrap"></TextBox>
+                <Button   Grid.Row="3" Grid.Column="0"  Grid.ColumnSpan="2" HorizontalAlignment="Center" Content="Generate ⏬" Click="OnRecover42"></Button>
+                <Label  Grid.Row="4" Grid.Column="0" Content="Address:"></Label>
+                <TextBox x:Name="TextBoxAddress42"  Grid.Row="4" Grid.Column="1" Text="" IsReadOnly="True" VerticalAlignment="Center"></TextBox>
+            </Grid>
+
+        </TabItem>
+
+    </TabControl>
+
+</Window>

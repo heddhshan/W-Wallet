@@ -1,0 +1,7 @@
+{
+    "projectName": "BlockChain.Wallet.Contract",
+    "namespace": "BlockChain.Wallet.Contract",
+    "lang":0,
+    "autoCodeGen":true,
+    "projectPath": "./"
+}

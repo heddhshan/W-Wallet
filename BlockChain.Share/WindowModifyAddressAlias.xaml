@@ -1,0 +1,57 @@
+﻿<Window x:Class="BlockChain.Share.WindowModifyAddressAlias"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.Share"
+        mc:Ignorable="d" Icon="Image/bianji.png"
+        Title="修改地址的别名" Height="300" Width="450" WindowStartupLocation="CenterScreen" MinWidth="450" MinHeight="300" MaxWidth="450" MaxHeight="300" WindowStyle="ToolWindow">
+
+    <Window.Resources>
+        <local:LanguageHelper x:Key="LanguageHelper"></local:LanguageHelper>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="PasswordBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+        </Style>
+
+    </Window.Resources>
+    
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='地址'}"></Label>
+        <Label Grid.Row="1" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='当前别名'}"></Label>
+        <Label Grid.Row="2" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='新的别名'}"></Label>
+        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='确定'}" Click="OnUpdateAlias"></Button>
+
+        <TextBox x:Name="TextBoxAddress" Grid.Row="0" Grid.Column="1" IsReadOnly="True"></TextBox>
+        <TextBox x:Name="TextBoxAlias" Grid.Row="1" Grid.Column="1" IsReadOnly="True"></TextBox>
+        <TextBox x:Name="TextBoxNewAlias" Grid.Row="2" Grid.Column="1"></TextBox>
+
+    </Grid>
+</Window>

@@ -1,0 +1,79 @@
+﻿<Window x:Class="BlockChain.Share.WindowLoadPrivateKey"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.Share"
+        mc:Ignorable="d"
+        Title="导入私钥" Height="400" Width="500" WindowStartupLocation="CenterScreen" 
+         ResizeMode="NoResize">
+
+    <Window.Resources>
+        <local:LanguageHelper x:Key="LanguageHelper"></local:LanguageHelper>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="PasswordBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+        </Style>
+
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
+            <ColumnDefinition  Width="18*"></ColumnDefinition>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Name="LabelInfo" Grid.Row="0" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='导入的私钥将被加密存入KeyStore文件。'}" Grid.ColumnSpan="3" HorizontalAlignment="Center"></Label>
+        <Label Grid.Row="1" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='录入私钥'}"></Label>
+        <Label Grid.Row="2" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='录入地址别名'}"></Label>
+        <Label Grid.Row="3" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='输入KeyStore密码'}"></Label>
+        <Label Grid.Row="4" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='确认KeyStore密码'}"></Label>
+
+        <TextBox  x:Name="TextBoxPrivateKey" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Height="70"  ></TextBox>
+        <TextBox  x:Name="TextBoxAlias" Grid.Row="2" Grid.Column="1"  ></TextBox>
+        <PasswordBox  x:Name="PasswordBox1" Grid.Row="3" Grid.Column="1"  PasswordChanged="OnInputPassword"></PasswordBox>
+        <PasswordBox  x:Name="PasswordBox2" Grid.Row="4" Grid.Column="1"  PasswordChanged="OnPassword2Changed"></PasswordBox>
+
+        <Grid Grid.Row="3" Grid.Column="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='弱'}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom"></Label>
+            <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='强'}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"></Label>
+            <ProgressBar x:Name="ProgressBar1"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="10" Value="1" Maximum="3" Margin="2"></ProgressBar>
+        </Grid>
+        <Label Name="LabelPasswordErr" Grid.Row="4" Grid.Column="2" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='密码不一致'}" Foreground="Red" Visibility="Visible"  />
+        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='确定'}" Click="OnLoadPrivateKey"></Button>
+
+    </Grid>
+</Window>

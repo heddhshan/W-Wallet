@@ -1,0 +1,578 @@
+﻿<Window x:Class="BlockChain.OfflineWallet.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.OfflineWallet"
+        xmlns:local_share="clr-namespace:BlockChain.Share;assembly=BlockChain.Share"
+        mc:Ignorable="d" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen"  Icon="favicon.ico" Closing="Window_Closing"
+        Title="W·OffLine Wallet - A Professional Ethereum OffLine Wallet" MinHeight="800" MinWidth="1280" Height="800" Width="1280">
+
+    <Window.Resources>
+
+        <local_share:LanguageHelper x:Key="LanguageHelper"></local_share:LanguageHelper>
+
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5,0" />
+            <Setter Property="Width" Value="120" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Margin" Value="2,0" />
+        </Style>
+
+        <Style TargetType="CheckBox">
+            <Setter Property="Margin" Value="5,0" />
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5,0" />
+        </Style>
+
+        <Style x:Key="TextStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5" />
+        </Style>
+
+        <Style x:Key="NumberStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10,5" />
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+
+        <Style x:Key="NumberStyle2" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+
+        <ContextMenu x:Key="ContextMenuAddress">
+            <MenuItem Name="MenuItemCopyAddress" Header="Copy Address" Click="CopyAddressOnClick" />
+            <Separator></Separator>
+            <MenuItem Name="MenuItemViewTx" Header="View Transaction"  Click="ViewTxOnClick" />
+        </ContextMenu>
+
+    </Window.Resources>
+
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="1"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0" Name="TabControlMain" SelectionChanged="TabControlMain_SelectionChanged">
+
+            <TabItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='账号'}" Width="120">
+
+                <ScrollViewer>
+                    <Grid x:Name="GridAddress" VerticalAlignment="Top" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition  Height="20"></RowDefinition>
+                            <RowDefinition  Height="50"></RowDefinition>
+                            <RowDefinition  Height="20"></RowDefinition>
+                            <RowDefinition  Height="50"></RowDefinition>
+                            <RowDefinition  Height="20"></RowDefinition>
+                            <RowDefinition  Height="50"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition  Height="20"></RowDefinition>
+                            <RowDefinition  Height="50"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="WhiteSmoke"></Border>
+                        <Border Grid.Row="3" Grid.ColumnSpan="2" Background="WhiteSmoke"></Border>
+                        <Border Grid.Row="5" Grid.ColumnSpan="2" Background="WhiteSmoke"></Border>
+                        <Border Grid.Row="7" Grid.ColumnSpan="2" Background="WhiteSmoke"></Border>
+                        <Border Grid.Row="10" Grid.ColumnSpan="2" Background="WhiteSmoke"></Border>
+
+                        <Label Grid.Row="0" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='1，助记词钱包'}" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="Blue"></Label>
+                        <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button VerticalAlignment="Center" Click="OnNewHDWallet">
+                                <Grid Width="116">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Source="Image\xinzeng1.png" Width="30" Height="30"></Image>
+                                    <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='新增助记词'}" Grid.Column="1"></Label>
+                                </Grid>
+                            </Button>
+                            <Button  VerticalAlignment="Center" Click="OnLoadHDWallet">
+                                <Grid Width="116">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Source="Image\daoru2.png" Width="30" Height="30"></Image>
+                                    <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='导入助记词'}" Grid.Column="1"></Label>
+                                </Grid>
+                            </Button>
+                        </StackPanel>
+
+                        <DataGrid x:Name="DataGridHDWallets" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" AutoGenerateColumns="False" CanUserAddRows="False"   SelectionMode="Single">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn   Binding="{Binding MneAlias}"  Width="800" IsReadOnly="True"  ElementStyle="{StaticResource TextStyle}"  >
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='助记词别名'}" />
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn   Binding="{Binding AddrNum}"  Width="300" IsReadOnly="True"  ElementStyle="{StaticResource NumberStyle}"  >
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='生成地址数'}" />
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTemplateColumn  Width="80"  >
+                                    <DataGridTemplateColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <Menu Tag="{Binding MneHash}"  VerticalAlignment="Center" Width="80" HorizontalAlignment="Left" >
+                                                <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='操作'}" VerticalAlignment="Center"  Width="80" HorizontalAlignment="Left" Margin="3"  >
+                                                    <MenuItem.Icon>
+                                                        <Image Source="Image/caozuo2.png"></Image>
+                                                    </MenuItem.Icon>
+                                                    <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='生成地址'}"  Click="OnGenAddress">
+                                                        <MenuItem.Icon>
+                                                            <Image Source="Image/shengchan.png"></Image>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='导出地址'}"  Click="OnExpAddress">
+                                                        <MenuItem.Icon>
+                                                            <Image Source="Image/daochu.png"></Image>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                                                                    
+                                                    
+                                                    <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='修改密码'}"  Click="OnChangepassword" ></MenuItem>
+                                                    <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='忘记密码'}"  Click="OnForgetpassword" ></MenuItem>
+                                                    <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='删除钱包'}"  Click="OnDeleteMne" Tag="{Binding MneId}"   >
+                                                        <MenuItem.Icon>
+                                                            <Image Source="Image/shanchu.png"></Image>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                </MenuItem>
+                                            </Menu>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Height="1" Margin="5" IsEnabled="False"  Width="600" ></Button>
+                        <!--<Border  Grid.Row="2" Grid.ColumnSpan="2" Background="Blue"></Border>-->
+
+                        <Label Grid.Row="3" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='2，KeyStore文件'}" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Blue"></Label>
+
+                        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Right">
+                            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Click="OnNewKeyStore">
+                                <Grid Width="116">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Source="Image\xinzeng2.png" Width="30" Height="30"></Image>
+                                    <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='新增KeyStore'}" Grid.Column="1" Margin="0"></Label>
+                                </Grid>
+                            </Button>
+                            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Click="OnLoadKeyStore">
+                                <Grid Width="116">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Source="Image\daoru1.png" Width="30" Height="30"></Image>
+                                    <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='导入KeyStore'}" Grid.Column="1" Margin="0"></Label>
+                                </Grid>
+                            </Button>
+                            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Click="OnOpenKeyStore">
+                                <Grid Width="116">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Source="Image\liulan.png" Width="30" Height="30"></Image>
+                                    <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='KeyStore目录'}" Grid.Column="1" Margin="0"></Label>
+                                </Grid>
+                            </Button>
+                        </StackPanel>
+
+                        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Height="1" Margin="5"  IsEnabled="False"  Width="600"></Button>
+
+                        <Label Grid.Row="5" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='3，私钥'}" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Blue"></Label>
+
+                        <Button Grid.Row="5" Grid.Column="1"  HorizontalAlignment="Right" VerticalAlignment="Center" Click="OnLoadPrivateKey">
+                            <Grid Width="116">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="Image\daoru3.png" Width="30" Height="30"></Image>
+                                <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='导入私钥'}" Grid.Column="1"></Label>
+                            </Grid>
+                        </Button>
+
+                        <Button Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Height="1" Margin="5"  IsEnabled="False"  Width="600"></Button>
+
+                        <!--<Expander Grid.Row="7" Grid.Column="0"  Grid.ColumnSpan="2"   Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='4，地址列表'}" IsExpanded="False" >-->
+
+                        <Grid Grid.Row="7" Grid.Column="0"  Grid.ColumnSpan="2" >
+                            <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='4，地址列表'}" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Blue"></Label>
+                            <Grid HorizontalAlignment="Right" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='条件:'}"></Label>
+                                <TextBox Grid.Column="1" Text="" Name="TextBoxAddressFilter" Width="400" Height="35" VerticalContentAlignment="Center" MaxLength="64" KeyDown="TextBoxAddressFilter_KeyDown"></TextBox>
+
+                                <!--<Button Grid.Column="2" Name="ButtonAddressFilter" Content="过滤" Click="AddressFilterOnClick"></Button>-->
+                                <Button Grid.Column="2" Name="ButtonAddressFilter"  VerticalAlignment="Center" Click="AddressFilterOnClick">
+                                    <Grid Width="116">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30"></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Grid.Column="0" Source="Image\iconfilter.jpg" Width="30" Height="30"></Image>
+                                        <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='过滤'}" Grid.Column="1" ></Label>
+                                    </Grid>
+                                </Button>
+                            </Grid>
+                        </Grid>
+
+                        <StackPanel  Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical">
+
+                            <DataGrid x:Name="DataGridAddress" AutoGenerateColumns="False" CanUserAddRows="False" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn   Binding="{Binding RowId}"  Width="80"  IsReadOnly="True"   ElementStyle="{StaticResource NumberStyle2}"  >
+                                        <DataGridTextColumn.Header>
+                                            <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='序号'}" />
+                                        </DataGridTextColumn.Header>
+                                    </DataGridTextColumn>
+
+                                    <DataGridTextColumn   Binding="{Binding AddressAlias}"  Width="360"  IsReadOnly="True"   ElementStyle="{StaticResource TextStyle}"  >
+                                        <DataGridTextColumn.Header>
+                                            <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='地址别名'}" />
+                                        </DataGridTextColumn.Header>
+                                    </DataGridTextColumn>
+                                    
+                                    <DataGridTemplateColumn   Width="360" CanUserSort="True" SortMemberPath="Address">
+                                        <DataGridTemplateColumn.Header>
+                                            <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='地址'}"  />
+                                        </DataGridTemplateColumn.Header>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="{Binding Path=Address}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
+                                                    Foreground="Blue" FontFamily="Courier New" 
+                                                    ContextMenu="{StaticResource ContextMenuAddress}" >
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                    <DataGridTextColumn    Binding="{Binding SourceName}" Width="240" IsReadOnly="True"   ElementStyle="{StaticResource TextStyle}"  >
+                                        <DataGridTextColumn.Header>
+                                            <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='来源（助记词或KeyStore）'}" />
+                                        </DataGridTextColumn.Header>
+                                    </DataGridTextColumn>
+
+                                    <DataGridTemplateColumn   Width="60" CanUserSort="True" SortMemberPath="IsTxAddress">
+                                        <DataGridTemplateColumn.Header>
+                                            <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='处理交易'}"  />
+                                        </DataGridTemplateColumn.Header>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <CheckBox IsChecked="{Binding IsTxAddress}" Tag="{Binding Address}"  Checked="IsTxAddress_Checked" Unchecked="IsTxAddress_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+
+                                    <DataGridTemplateColumn  Width="80">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Menu  VerticalAlignment="Center">
+                                                    <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='操作'}"  Tag="{Binding Address}" Margin="3"   VerticalAlignment="Center"  Width="80" HorizontalAlignment="Left" >
+                                                        <MenuItem.Icon>
+                                                            <Image Source="Image/caozuo2.png"></Image>
+                                                        </MenuItem.Icon>                                                       
+                                                        <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='导出私钥'}" Click="OnLoadPrivateKey11">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="Image/daochu.png"></Image>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='查看二维码'}" Click="OnShouQRcode">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="Image/erweima.png"></Image>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='删除该地址'}"  Click="OnDeleteAddress" Tag="{Binding SourceName}">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="Image/shanchu.png"></Image>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='编辑地址别名'}" Click="OnModifyAddressAlias">
+                                                            <MenuItem.Icon>
+                                                                <Image Source="Image/bianji.png"></Image>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                      
+                                                        <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='导出KeyStore文件'}"  Click="OnExKeyStore"></MenuItem>
+                                                    </MenuItem>
+                                                </Menu>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+
+                            <Grid x:Name="GridPager" HorizontalAlignment="Right">
+                                <!--<Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>-->
+
+                                <local_share:Pager  x:Name="PagerAddress" HorizontalAlignment="Center"  PreviousPage="PagerAddress_PreviousPage"
+                                          FirstPage="PagerAddress_FirstPage" NextPage="PagerAddress_NextPage" LastPage="PagerAddress_LastPage" PageRecNumChanged="PagerAddress_PageRecNumChanged">
+                                </local_share:Pager>
+                            </Grid>
+                        </StackPanel>
+
+                        <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Height="1" Margin="5"  IsEnabled="False"  Width="600"></Button>
+
+                        <Label Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='5，账号信息备份和恢复'}" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Blue"></Label>
+                        <StackPanel Grid.Row="10" Grid.Column="1" Orientation="Horizontal"  HorizontalAlignment="Right">
+                            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Click="OnAccountBackUp">
+                                <Grid Width="116">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Source="Image\BackUp.png" Width="30" Height="30"></Image>
+                                    <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='备份账号'}" Grid.Column="1"></Label>
+                                </Grid>
+                            </Button>
+                            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Click="OnAccountReStore">
+                                <Grid Width="116">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Source="Image\Restore.png" Width="30" Height="30"></Image>
+                                    <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='恢复账号'}" Grid.Column="1"></Label>
+                                </Grid>
+                            </Button>
+                        </StackPanel>
+
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='地址本'}" Width="120">
+                <ScrollViewer>
+                    <Grid VerticalAlignment="Top" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition  Height="50"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="WhiteSmoke"></Border>
+
+                        <Label  Grid.Row="0" Grid.Column="1" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='为经常转账的地址添加别名和备注'}"  Foreground="Blue"></Label>
+                        <Button  Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Right" Click="OnAddContact">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="Image\tianjia.png" Width="30" Height="30"></Image>
+                                <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='添加地址'}" Grid.Column="1"></Label>
+                            </Grid>
+                        </Button>
+                        <DataGrid x:Name="DataGridContact" Grid.Row="1" Grid.Column="0" AutoGenerateColumns="False" CanUserAddRows="False"   CanUserDeleteRows="False"  SelectionMode="Single">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding ContactName}"  Width="300" IsReadOnly="True"   ElementStyle="{StaticResource TextStyle}"   >
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='名称'}" />
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <!--<DataGridTextColumn  Binding="{Binding ContactAddress}"  Width="350"  IsReadOnly="True"  ElementStyle="{StaticResource TextStyle}"  >
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='地址'}" />
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>-->
+                                <DataGridTemplateColumn  Width="400"  CanUserSort="True" SortMemberPath="ContactAddress">
+                                    <DataGridTemplateColumn.Header>
+                                        <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='地址'}" />
+                                    </DataGridTemplateColumn.Header>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="{Binding Path=ContactAddress}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
+                                                    Foreground="Blue"  FontFamily="Courier New"
+                                                    ContextMenu="{StaticResource ContextMenuAddress}" >
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTextColumn Binding="{Binding ContactRemark}" Width="400" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='备注'}" />
+                                    </DataGridTextColumn.Header>
+                                    <DataGridTextColumn.ElementStyle >
+                                        <Style TargetType="TextBlock" >
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                            <Setter Property="Margin" Value="5" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTemplateColumn Width="80">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Menu VerticalAlignment="Center">
+                                                <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='操作'}"  Margin="3" Tag="{Binding ContactAddress}" VerticalAlignment="Center"  Width="80" HorizontalAlignment="Left"  >
+                                                    <MenuItem.Icon>
+                                                        <Image Source="Image/caozuo2.png"></Image>
+                                                    </MenuItem.Icon>
+                                                    <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='删除'}" Click="OnDelete">
+                                                        <MenuItem.Icon>
+                                                            <Image Source="Image/shanchu.png"></Image>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='查看二维码'}" Click="OnShowContactAddress">
+                                                        <MenuItem.Icon>
+                                                            <Image Source="Image/erweima.png"></Image>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                </MenuItem>
+                                            </Menu>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem >
+                <TabItem.Header>
+                    <StackPanel x:Name="StackPanelMenu" Orientation="Horizontal">
+
+                        <Button x:Name="ButtonOffSig"  Click="OffSig_OnClick" >
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Image  Grid.Column="0" Source="Image\sig.png" Width="30" Height="30"></Image>
+                                <TextBlock  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='离线签名'}"></TextBlock>
+                            </Grid>
+                        </Button>
+
+                        <Button x:Name="ButtonFuction"  Click="Fuction_OnClick" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Image  Grid.Column="0" Source="Image\function.png" Width="30" Height="30"></Image>
+                                <TextBlock  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Fuction"></TextBlock>
+                            </Grid>
+                        </Button>
+                       
+                        <Button x:Name="ButtonTools"  Click="ButtonTools_OnClick" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="34"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Image  Grid.Column="0" Source="Image\tools.png" Width="30" Height="30"></Image>
+                                <Menu x:Name="MenuTools"  Grid.Column="1"   HorizontalAlignment="Center" Background="{Binding ElementName=ButtonTools, Path=Background}" >
+                                    <MenuItem Name="MenuItemTools" Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='系统和工具'}"  Height="30"  >
+
+
+                                        <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='常用计算工具'}" Click="OnCalTools">
+                                            <MenuItem.Icon>
+                                                <Image Source="Image\cal.png"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+
+
+                                        <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='数据库'}" Click="OnDataBase">
+                                            <MenuItem.Icon>
+                                                <Image Source="Image\database.png"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+                                        <MenuItem Header="Language[语言]" Click="OnLanguage">
+                                            <MenuItem.Icon>
+                                                <Image Source="Image\multi-language.ico"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+
+
+                                        <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='关于'}" Click="OnAbout">
+                                            <MenuItem.Icon>
+                                                <Image Source="Image\guanyu.png"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+                                        <Separator></Separator>
+
+                                        <MenuItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='退出'}" Click="OnSysExit">
+                                            <MenuItem.Icon>
+                                                <Image Source="Image\tuichu.png"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+
+                                       
+
+                                    </MenuItem>
+                                </Menu>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
+
+        </TabControl>
+
+        <Border  Grid.Row="1" Background="Blue"></Border>
+        <!--<local_share:UserControlStatusBar Grid.Row="2" x:Name="UcStatusBar" VerticalAlignment="Center" />-->
+
+
+        <Grid Grid.Row="2" >
+            <Grid.ColumnDefinitions>                
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+           
+            <Label Margin="10,0" VerticalAlignment="Center" Name="LabelInfo" Grid.Column="0" Content="*"  HorizontalAlignment="Right"></Label>
+
+            <Grid Grid.Column="1" >
+                <ProgressBar HorizontalAlignment="Center" Name="progressBar1" VerticalAlignment="Center" IsIndeterminate="True"  BorderThickness="0" Height="30" Width="96"/>
+                <TextBlock x:Name="TextBlockStatus" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Processing"></TextBlock>
+            </Grid>
+        </Grid>
+
+
+    </Grid>
+
+</Window>

@@ -1,0 +1,169 @@
+﻿<Window x:Class="BlockChain.Share.WindowTxStatus"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.Share"
+        mc:Ignorable="d" Icon="Image\zhuangtai.png"
+        Title="查看事务执行状态" Height="600" Width="800" MinHeight="600" MinWidth="800" WindowStartupLocation="CenterScreen" Closed="Window_Closed" WindowStyle="SingleBorderWindow" >
+
+    <Window.Resources>
+        <local:LanguageHelper x:Key="LanguageHelper"></local:LanguageHelper>
+        
+        <Style x:Key="TextStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5" />
+        </Style>
+
+        <Style x:Key="TextStyle2" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5" />
+        </Style>
+
+        <Style x:Key="NumberStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10,5" />
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+
+        <Style x:Key="Body_Content_DataGrid_Centering" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid  Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid  Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <CheckBox Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='显示在顶层'}" Margin="2" VerticalAlignment="Center" Checked="OnChecked" Unchecked="OnUmchecked" Height="40" VerticalContentAlignment="Center"></CheckBox>
+            <Button Grid.Column="1" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='手动刷新'}" Margin="2"  Width="60" Height="30" HorizontalAlignment="Right" Click="OnRefresh"></Button>
+        </Grid>
+
+        <TabControl Grid.Row="1">
+            <TabItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='最近7天Pending交易'}" Width="240">
+                <DataGrid Margin="0,2"  x:Name="DataGridCurTxs"  CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" 
+                          AutoGenerateColumns="False" SelectionMode="Single">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding UserFrom}" ElementStyle="{StaticResource TextStyle}">
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='发起地址'}"  />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding CreateTime, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}"  ElementStyle="{StaticResource TextStyle2}">
+                            <DataGridTextColumn.Header>
+                            <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='提交时间'}" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        
+                        <DataGridTemplateColumn Header="TransactionHash" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="{Binding Path=TransactionHash}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Click="OnGotoTxUrl" Foreground="Blue"></Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="" Width="150">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Cancel Transaction"  Click="CancelTransaction_Click" Margin="5,2" Height="30" Width="120"></Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTextColumn Binding="{Binding UserMethod}" ElementStyle="{StaticResource TextStyle}">
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='类型'}" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        
+                        <DataGridTextColumn Binding="{Binding UserRemark}" ElementStyle="{StaticResource TextStyle}">
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='描述'}" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <TabItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='最近（500条）交易'}" Width="240">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                  </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0"  Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='提示：由于各种原因，并非所有提交的事务都会被执行，以下长时间为[Pending]状态的事务一般是没有执行的事务。'}"  VerticalAlignment="Center" Margin="10,0"></Label>
+                    
+                <DataGrid Grid.Row="1"  Margin="0,2"  x:Name="DataGridHisTxs"  CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"  
+                           AutoGenerateColumns="False" SelectionMode="Single" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding UserFrom}" ElementStyle="{StaticResource TextStyle}">
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='发起地址'}" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding CreateTime, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}"  ElementStyle="{StaticResource TextStyle2}" >
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='提交时间'}" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTemplateColumn Header="TransactionHash"  >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="{Binding Path=TransactionHash}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Click="OnGotoTxUrl" Foreground="Blue" ></Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Binding="{Binding TxStatus}" ElementStyle="{StaticResource TextStyle}">
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='状态'}" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding UserMethod}" ElementStyle="{StaticResource TextStyle}">
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='类型'}" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn  Binding="{Binding UserRemark}" ElementStyle="{StaticResource TextStyle}">
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='描述'}" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn  Binding="{Binding GasUsed}"  ElementStyle="{StaticResource NumberStyle}" >
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Gas Used'}"  />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn  Binding="{Binding GasPriceGwei}"  ElementStyle="{StaticResource NumberStyle}" >
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Gas Price(Gwei)'}" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        
+                    </DataGrid.Columns>
+                </DataGrid>
+                  
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+
+</Window>

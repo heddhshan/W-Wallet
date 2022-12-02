@@ -1,0 +1,58 @@
+{
+  "ExtendedData": {
+    "inputs": [
+      "http://api.microsofttranslator.com/V2/Soap.svc"
+    ],
+    "collectionTypes": [
+      "System.Array",
+      "System.Collections.Generic.Dictionary`2"
+    ],
+    "namespaceMappings": [
+      "*, MicrosoftTranslationV2"
+    ],
+    "references": [
+      "BouncyCastle.Crypto, {Portable.BouncyCastle, 1.8.2}",
+      "Common.Logging.Core, {Common.Logging.Core, 3.4.1}",
+      "log4net, {log4net, 2.0.15}",
+      "Microsoft.CSharp, {Microsoft.CSharp, 4.0.1}",
+      "Microsoft.Win32.SystemEvents, {Microsoft.Win32.SystemEvents, 6.0.0}",
+      "NBitcoin.Secp256k1, {NBitcoin.Secp256k1, 1.0.3}",
+      "Nethereum.ABI, {Nethereum.ABI, 4.8.0}",
+      "Nethereum.Accounts, {Nethereum.Accounts, 4.8.0}",
+      "Nethereum.BlockchainProcessing, {Nethereum.BlockchainProcessing, 4.8.0}",
+      "Nethereum.Contracts, {Nethereum.Contracts, 4.8.0}",
+      "Nethereum.Hex, {Nethereum.Hex, 4.8.0}",
+      "Nethereum.JsonRpc.Client, {Nethereum.JsonRpc.Client, 4.8.0}",
+      "Nethereum.JsonRpc.RpcClient, {Nethereum.JsonRpc.RpcClient, 4.8.0}",
+      "Nethereum.KeyStore, {Nethereum.KeyStore, 4.8.0}",
+      "Nethereum.Model, {Nethereum.Model, 4.8.0}",
+      "Nethereum.RLP, {Nethereum.RLP, 4.8.0}",
+      "Nethereum.RPC, {Nethereum.RPC, 4.8.0}",
+      "Nethereum.Signer, {Nethereum.Signer, 4.8.0}",
+      "Nethereum.Signer.EIP712, {Nethereum.Signer.EIP712, 4.8.0}",
+      "Nethereum.StandardTokenEIP20, {Nethereum.StandardTokenEIP20, 4.8.0}",
+      "Nethereum.Util, {Nethereum.Util, 4.8.0}",
+      "Nethereum.Web3, {Nethereum.Web3, 4.8.0}",
+      "Newtonsoft.Json, {Newtonsoft.Json, 11.0.2}",
+      "System.Configuration.ConfigurationManager, {System.Configuration.ConfigurationManager, 6.0.0}",
+      "System.Drawing.Common, {System.Drawing.Common, 6.0.0}",
+      "System.Dynamic.Runtime, {System.Dynamic.Runtime, 4.0.11}",
+      "System.IO, {System.IO, 4.1.0}",
+      "System.Linq.Expressions, {System.Linq.Expressions, 4.1.0}",
+      "System.ObjectModel, {System.ObjectModel, 4.0.12}",
+      "System.Reflection, {System.Reflection, 4.1.0}",
+      "System.Reflection.Primitives, {System.Reflection.Primitives, 4.0.1}",
+      "System.Runtime, {System.Runtime, 4.1.0}",
+      "System.Runtime.Caching, {System.Runtime.Caching, 6.0.0}",
+      "System.Security.AccessControl, {System.Security.AccessControl, 6.0.0}",
+      "System.Security.Cryptography.ProtectedData, {System.Security.Cryptography.ProtectedData, 6.0.0}",
+      "System.Security.Permissions, {System.Security.Permissions, 6.0.0}",
+      "System.Text.Encoding, {System.Text.Encoding, 4.0.11}",
+      "System.Threading.Tasks, {System.Threading.Tasks, 4.0.11}",
+      "System.Windows.Extensions, {System.Windows.Extensions, 6.0.0}"
+    ],
+    "sync": true,
+    "targetFramework": "net6.0",
+    "typeReuseMode": "All"
+  }
+}

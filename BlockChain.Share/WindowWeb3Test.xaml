@@ -1,0 +1,146 @@
+﻿<Window x:Class="BlockChain.Share.WindowWeb3Test"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.Share"           
+        mc:Ignorable="d" Icon="Image\web3.png" Loaded="WindowOnLoaded"
+        Title="geth web3 test" Height="600" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" >
+
+    <Window.Resources>
+        <local:LanguageHelper x:Key="LanguageHelper"></local:LanguageHelper>
+
+        <Style x:Key="TextStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style x:Key="NumberStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10,5" />
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="35" />
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Margin" Value="2" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Margin" Value="2" />
+        </Style>
+    </Window.Resources>
+
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TabControl x:Name="TabControlMain" SelectionChanged="TabControlMain_SelectionChanged">
+            <TabItem Header="Web3 Url"  MinWidth="200">
+
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="120"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition></RowDefinition>                        
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="3"  HorizontalAlignment="Center" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='注意：有可能存在恶意的web3 url，建议尽量使用使用官方推荐的web3 url节点或者您自己搭建的节点。'}"></Label>
+                      
+                    <Grid  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Margin="10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition  Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="60" ></ColumnDefinition>
+                            <ColumnDefinition   Width="150"></ColumnDefinition>
+                            <ColumnDefinition Width="80"></ColumnDefinition>
+                            <ColumnDefinition ></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock VerticalAlignment="Center">
+                            <Hyperlink Name="HyperlinkEthereumNodes" NavigateUri="https://ethereumnodes.com/" Click="OnUrlClick">web3 nodes</Hyperlink>
+                        </TextBlock>
+
+                        <Label Grid.Column="1" Content="Alias:" HorizontalAlignment="Right"></Label>
+                        <TextBox Grid.Column="2" x:Name="TextBoxAlias" ></TextBox>
+
+                        <Label Grid.Column="3" Content="Web3 Url:" HorizontalAlignment="Right"></Label>
+                        <TextBox Grid.Column="4" x:Name="TextBoxUrl"  ></TextBox>
+                    </Grid>
+
+                    <Button Grid.Row="1" Grid.Column="2" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='添加'}" Click="OnAddWeb3Url"></Button>
+
+                    <Label Grid.Row="2" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='当前使用的 web3 url：'}"></Label>
+                    <Label Name="LabelWeb3Url" Grid.Row="2" Grid.Column="1"  Foreground="Blue">
+                    </Label>
+                    
+                    <!--<Button Grid.Row="2" Grid.Column="2" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='确定'}"  Click="OnTestWeb3Url"></Button>-->
+
+                    
+                    <DataGrid x:Name="DataGridWeb3Url"  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="2" AutoGenerateColumns="False" IsReadOnly="True" 
+                              CanUserAddRows="False" CanUserDeleteRows="False"  SelectionMode="Single">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Alias" Width="150" Binding="{Binding UrlAlias}"  ElementStyle="{StaticResource TextStyle}" ></DataGridTextColumn>
+                            <DataGridTextColumn Header="web3 url" Width="400" Binding="{Binding Url}"  ElementStyle="{StaticResource TextStyle}" ></DataGridTextColumn>
+                            <DataGridTemplateColumn Width="200">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Tag="{Binding UrlHash}" HorizontalAlignment="Center">
+                                            <Button Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='测试'}" Width="60" Click="OnTestWeb3Url2" Height="30"></Button>
+                                            <Button Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='使用'}" Width="60" Click="OnUse" Height="30"></Button>
+                                            <Button Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='删除'}" Width="60" Click="OnDelete" Height="30"></Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                  
+                </Grid>
+
+
+            </TabItem>
+
+
+            <TabItem Header="Ether Scan" MinWidth="200" >
+                <StackPanel Margin="10" HorizontalAlignment="Center">
+                    <Label Name="LabelEthExplore" Content="*"  Margin="10"></Label>
+                    <!--<RadioButton Content="https://etherscan.io/"                Tag="ETH MainNet"           GroupName="4"    Checked="OnSelectEtherSacn" Margin="10"></RadioButton>
+                    <RadioButton Content="https://cn.etherscan.com/"            Tag="ETH MainNet(CN)"       GroupName="4"    Checked="OnSelectEtherSacn" Margin="10"></RadioButton>
+                    <RadioButton Content="https://rinkeby.etherscan.io/"           Tag="ETH Rinkeby MainNet"           GroupName="4"    Checked="OnSelectEtherSacn" Margin="10"></RadioButton>
+                    <RadioButton Content="https://www.blockchain.com/eth/"      Tag="ETH MainNet"           GroupName="4"    Checked="OnSelectEtherSacn" Margin="10"></RadioButton>-->
+                    <!--<RadioButton Content="https://rinkeby.etherscan.io/"        Tag="ETH TestNet(Rinkeby)"  GroupName="4"    Checked="OnSelectEtherSacn" Margin="10"></RadioButton>-->
+                    <RadioButton Content="https://etherscan.io/"                    Tag="ETH MainNet"           GroupName="4"    Checked="OnSelectEtherSacn" Margin="10"></RadioButton>
+                    <RadioButton Content="https://goerli.etherscan.io/"            Tag="ETH Goerli Net"       GroupName="4"    Checked="OnSelectEtherSacn" Margin="10"></RadioButton>
+                    <RadioButton  Tag="Customize"       GroupName="4"    Checked="OnSelectEtherSacn" Margin="10"  VerticalContentAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Customize:"></Label>
+                            <TextBox x:Name="TextBoxCustomize" VerticalAlignment="Center" HorizontalAlignment="Left" Width="400"></TextBox>
+                            <Button Content="Apply" Click="Apply_Click"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"></Button>
+                        </StackPanel>
+                    </RadioButton>
+                    <!--<RadioButton Content="https://rinkeby.etherscan.io/"            Tag="ETH Rinkeby Net"       GroupName="4"    Checked="OnSelectEtherSacn" Margin="10"></RadioButton>-->
+                    <!--<RadioButton Content="https://rinkeby-explorer.arbitrum.io/"    Tag="Arbitrum Rinkeby MainNet"  GroupName="4"    Checked="OnSelectEtherSacn" Margin="10"></RadioButton>-->
+                    <!--<RadioButton Content="https://bscscan.com/"                 Tag="BNB MainNet"           GroupName="4"    Checked="OnSelectEtherSacn" Margin="10"></RadioButton>-->
+                    <!--<RadioButton Content="https://testnet.bscscan.com/"         Tag="BNB TestNet"           GroupName="4"    Checked="OnSelectEtherSacn" Margin="10"></RadioButton>-->
+                </StackPanel>
+            </TabItem>
+
+
+        </TabControl>
+
+        <Button Grid.Row="1" HorizontalAlignment="Right" Content="Close" Click="CloseOnClick" Margin="10,0"></Button>
+    </Grid>
+</Window>

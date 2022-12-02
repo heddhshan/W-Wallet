@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BlockChain.Share.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="UserDbConnectionString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Data Source=desktop-one\MSSQLSERVER2019;Initial Catalog=WalletDb;Integrated Security=True</Value>
+    </Setting>
+    <Setting Name="EtherSacn" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://goerli.etherscan.io/</Value>
+    </Setting>
+    <Setting Name="IsErc20ApproveMax" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ChainId" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="UseLegacyAsDefault" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="IsTranslateOnLine" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="WindowPosition" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MsTranslationKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0ae3530fc6474a038493668f70c19beb</Value>
+    </Setting>
+    <Setting Name="MsTranslationLocation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">eastasia</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

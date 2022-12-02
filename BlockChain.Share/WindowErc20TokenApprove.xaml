@@ -1,0 +1,106 @@
+﻿<Window x:Class="BlockChain.Share.WindowErc20TokenApprove"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.Share"
+        mc:Ignorable="d"
+        Title="Erc20 Token Approve" Height="400" Width="600">
+
+    <Window.Resources>
+
+        <local:LanguageHelper x:Key="LanguageHelper"></local:LanguageHelper>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="RadioButton">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5,0" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+
+
+        <!--<Style TargetType="TextBlock">
+            <Setter Property=" TextWrapping" Value="Wrap" />
+            <Setter Property=" VerticalAlignment" Value="Center" />
+        </Style>-->
+
+
+    </Window.Resources>
+
+    
+    <Grid Margin="10" Height="300">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+         
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Owner(拥有人):" TextWrapping="Wrap"  VerticalAlignment="Center" ></TextBlock>
+        <Button Grid.Row="0" Grid.Column="1"  Name="ButtonOwner" Content="0xC7A9d8C6C987784967375aE97a35D30AB617eB48" HorizontalAlignment="Left" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Click="Onwer_Click"></Button>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="ERC20 Token:" TextWrapping="Wrap" VerticalAlignment="Center"  ></TextBlock>
+        <Button Grid.Row="1" Grid.Column="1"  Name="ButtonERC20Token" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Click="Token_Click">
+            <StackPanel Orientation="Horizontal" >
+                <Image Margin="5,0" Width="30" Height="30"></Image>
+                <Label Margin="5,0"></Label>
+                <Label Margin="5,0"></Label>
+            </StackPanel>
+        </Button>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Spender（执行转账的人）:" TextWrapping="Wrap" VerticalAlignment="Center" ></TextBlock>
+        <Button Grid.Row="2" Grid.Column="1"  Name="ButtonSpender" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Click="Spender_Click" Content="0xC7A9d8C6C987784967375aE97a35D30AB617eB48" HorizontalAlignment="Left"></Button>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Transfer Amount（转账金额）:" TextWrapping="Wrap" VerticalAlignment="Center" ></TextBlock>
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" >
+            <TextBox x:Name="TextBoxTransferAmount" Text="0" IsReadOnly="True" Width="200" HorizontalAlignment="Left"></TextBox>
+            <Label Name="LabelTransferAmount"></Label>
+        </StackPanel>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Approve Amount（授权金额）:" TextWrapping="Wrap" VerticalAlignment="Center"  ></TextBlock>
+        <StackPanel Grid.Row="4" Grid.Column="1"  Orientation="Horizontal">
+            <TextBox x:Name="TextBoxApproveAmount" Grid.Row="4" Grid.Column="1" Text="0" Width="200"></TextBox>
+            <RadioButton GroupName="Amount" Content="最大值" Margin="5,0" Tag="1"  Checked="RadioButton_Checked"></RadioButton>
+            <RadioButton GroupName="Amount" Content="建议值" Margin="5,0" Tag="2" Checked="RadioButton_Checked" IsChecked="True"></RadioButton>
+            <RadioButton GroupName="Amount" Content="自定义" Margin="5,0" Tag="3" Checked="RadioButton_Checked"></RadioButton>
+        </StackPanel>
+
+        <CheckBox x:Name="CheckBoxGotoTxUrl" Grid.Row="5" Grid.Column="1" Content="显示事务执行状态" VerticalAlignment="Center"></CheckBox>
+
+        <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="确定" Width="100" Margin="50,0" Click="OK_Click"></Button>
+            <Button Content="取消" Width="100" Margin="50,0" Click="Cancel_Click"></Button>
+        </StackPanel>
+
+    </Grid>
+    
+</Window>

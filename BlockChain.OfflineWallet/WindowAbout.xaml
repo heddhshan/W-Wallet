@@ -1,0 +1,129 @@
+﻿<Window x:Class="BlockChain.OfflineWallet.WindowAbout"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.OfflineWallet"
+        mc:Ignorable="d" Icon="Image\guanyu.png"
+        Title="About" Height="600" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"  >
+
+    <Window.Resources>
+        <local:LanguageHelper x:Key="LanguageHelper"></local:LanguageHelper>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="PasswordBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+            <Setter Property="FontFamily" Value="Courier New" />
+            <Setter Property="Margin" Value="5,0" />
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <!--<Style TargetType="Button">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+        </Style>-->
+
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TabControl x:Name="TabControlMain" Grid.Row="0" Grid.Column="0" >
+            <TabItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='基本信息'}" MinWidth="120">
+                <StackPanel Margin="5">
+                    <Grid Background="WhiteSmoke" Margin="5" Height="80">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130"></ColumnDefinition>
+                            <ColumnDefinition  Width="120"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='当前版本'}" Grid.RowSpan="3" ></Label>
+                        <Label Grid.Row="0" Grid.Column="1" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='当前版本号:'}" ></Label>
+                        <TextBlock x:Name="TextBlockCurVersion" Grid.Row="0" Grid.Column="2" Text="2020.01.01"></TextBlock>
+
+                        <Label Grid.Row="1" Grid.Column="1" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='联系方式:'}" ></Label>
+                        <!--<TextBlock Grid.Row="1" Grid.Column="2">
+                            <Hyperlink x:Name="HyperlinkLinkInfo" Click="OnClickTelegram"></Hyperlink>
+                        </TextBlock>-->
+                        <TextBox Grid.Row="1" Grid.Column="2" IsReadOnly="True" Name="TextBoxLinkInfo">                            
+                        </TextBox>
+                    </Grid>
+
+                    <Grid Margin="5">
+                        <TextBlock x:Name="TextBlockUpdateRemark"  Text="版本更新说明：离线钱包被设计为脱离网络使用，如果要下载新版本，可以在连接互联网的电脑上打开在线钱包，在线钱包里面会提供下载的链接。" TextWrapping="Wrap" ></TextBlock>                        
+                    </Grid>
+                    
+                </StackPanel>
+
+            </TabItem>
+
+            <TabItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='安全与隐私'}"  MinWidth="120">
+                <ScrollViewer  Margin="30"  VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <TextBlock  Margin="5"  Name="TextBlockNotice" Text=""  TextWrapping="Wrap"></TextBlock>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem MinWidth="120">
+                <TabItem.Header>
+                    <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='免责声明'}"></Label>
+                </TabItem.Header>
+                <StackPanel Margin="30">
+                    <TextBlock TextWrapping="Wrap" Name="TextBlockDisclaimer"></TextBlock>                    
+                </StackPanel>              
+            </TabItem>
+
+            <TabItem  MinWidth="120"  >
+                <TabItem.Header>
+                    <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='感谢'}"></Label>
+                </TabItem.Header>
+                <Grid Margin="10"  >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0"  Source="Image\thank-you-ico.png"></Image>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <Button Margin="10" Content="Ethereum" Tag="https://ethereum.org/"  FontSize="24" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center"   Click="GoToUrl_Click" ></Button>
+                        <Button Margin="10" Content="Nethereum" Tag="https://nethereum.com/"  FontSize="36" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center"   Click="GoToUrl_Click" ></Button>
+                        <Button Margin="10" Content="Microsoft VisualStudio" Tag="https://visualstudio.microsoft.com/"  FontSize="18" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center"   Click="GoToUrl_Click" ></Button>
+                        <Button Margin="10" Content="EtherScan" Tag="https://etherscan.io/"  FontSize="18" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center"   Click="GoToUrl_Click" ></Button>
+                        <Button Margin="10" Content="remix" Tag="https://remix.ethereum.org"  FontSize="18" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center"  Click="GoToUrl_Click"  ></Button>
+                        <Button Margin="10" Content="Newtonsoft.Json" Tag="https://www.newtonsoft.com/json"  FontSize="12" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center"   Click="GoToUrl_Click" ></Button>
+                        <Button Margin="10" Content="ZXing.Net" Tag="https://github.com/micjahn/ZXing.Net/"  FontSize="12" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center"  Click="GoToUrl_Click"  ></Button>
+                        <Button Margin="10" Content="log4net" Tag="https://logging.apache.org/log4net/"  FontSize="12" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center"  Click="GoToUrl_Click"  ></Button>
+                        <Button Margin="10" Content="NBitcoin" Tag="https://github.com/MetacoSA/NBitcoin"  FontSize="12" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center"  Click="GoToUrl_Click"  ></Button>
+                        <!--<Button Margin="10" Content="Everyone who helped me" Tag="https://etherscan.io/address/0xC7A9d8C6C987784967375aE97a35D30AB617eB48"  FontSize="24" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Center" VerticalAlignment="Center"  Click="GoToUrl_Click"   ></Button>-->
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        
+
+        </TabControl>
+
+    </Grid>
+</Window>

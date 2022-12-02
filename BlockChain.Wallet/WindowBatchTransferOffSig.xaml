@@ -1,0 +1,593 @@
+﻿<Window x:Class="BlockChain.Wallet.WindowBatchTransferOffSig"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.Wallet"
+        mc:Ignorable="d" Icon="image\sigdata.jfif"
+        Title="制作批量转账离线签名准备数据"  Height="800" Width="1280" WindowStartupLocation="CenterScreen" MinWidth="1280" MinHeight="800" Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <local:LanguageHelper x:Key="LanguageHelper"></local:LanguageHelper>
+
+        <Style x:Key="TextStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="3" />
+        </Style>
+
+        <Style x:Key="NumberStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10,2" />
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+
+        <Style x:Key="Body_Content_DataGrid_Centering" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CenterAlignmentStyle" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="PasswordBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Margin" Value="0,0,10,0" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="Width" Value="120" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='说明：下面是生成批量离线签名准备数据的两种情况；在本系统中，使用0x0000000000000000000000000000000000000000代表ETH。'}"></Label>
+
+        <TabControl Grid.Row="1">
+            
+            <TabItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='多个地址向一个地址转账'}" MinWidth="300">
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+                    <Grid VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition ></ColumnDefinition>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition MinHeight="100"></RowDefinition>
+                            <RowDefinition MinHeight="100"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Expander  Grid.Column="0" Grid.Row="0" Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='1,设置转账事务金额'}" 
+                                   Margin="10" IsExpanded="True" Background="WhiteSmoke">
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition Height="50"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0" Grid.Column="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition Width="350"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="1.1,Token:"  Grid.Column="0" Foreground="Blue" ></Label>
+                                    <ComboBox Name="ComboBoxToken1" Grid.Column="1" Width="330" HorizontalAlignment="Left"   SelectionChanged="ComboBoxToken1_SelectionChanged" >
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Width="{Binding  ElementName=ComboBoxToken1, Path=Width}">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="60"></ColumnDefinition>
+                                                        <ColumnDefinition ></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Image  Grid.Column="0" Source="{Binding ImagePath}" Height="30" Width="30"></Image>
+                                                    <Label Grid.Column="1" Content="{Binding Symbol}"></Label>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </Grid>
+
+
+                                <StackPanel Grid.Row="1" Grid.Column="0" >
+
+                                    <Grid  Height="50">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition Width="350"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Label  Grid.Column="0" Content="1.2,From:" Foreground="Blue"></Label>
+
+                                        <Label  Grid.Column="1" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='选择助记词'}"  VerticalAlignment="Center" HorizontalAlignment="Right"  ></Label>
+                                        <ComboBox  Name="ComboBoxHD4" Grid.Column="2" VerticalAlignment="Center" SelectionChanged="OnSelectionChanged4"  Width="330" HorizontalAlignment="Left" >
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Label Grid.Column="0" Content="{Binding MneAlias}"></Label>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </Grid>
+
+                                    <Grid x:Name="GridHdWallet" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="50"></RowDefinition>
+                                            <RowDefinition></RowDefinition>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid  Grid.Row="0" Grid.Column="0" >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="200"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <CheckBox Grid.Row="0" Grid.Column="0" x:Name="CheckBoxSelectAll4" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='全选'}" IsChecked="True" Checked="OnSelectAll" Unchecked="OnUnSelectAll"   Margin="10,0"></CheckBox>
+                                            <Button Grid.Row="0" Grid.Column="1" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='刷新余额和Nonce'}"  Click="OnRefeshDG4" HorizontalAlignment="Right" ></Button>
+                                        </Grid>
+
+                                        <DataGrid x:Name="DataGridHDAddress4" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" CanUserAddRows="False" 
+                                              CanUserDeleteRows="False" AutoGenerateColumns="False" Margin="5,0" SelectionMode="Single" 
+                                              HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                                              CellStyle="{StaticResource Body_Content_DataGrid_Centering}" MinHeight="150" MaxHeight="400">
+                                            <DataGrid.Columns>
+
+                                                <DataGridTextColumn  Binding="{Binding  AddressIndex}" Header="Index"  ElementStyle="{StaticResource NumberStyle}">
+                                                </DataGridTextColumn>
+
+                                                <DataGridCheckBoxColumn  Binding="{Binding  IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+                                                    <DataGridCheckBoxColumn.Header>
+                                                        <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='选择'}" />
+                                                    </DataGridCheckBoxColumn.Header>
+                                                </DataGridCheckBoxColumn>
+
+                                                <DataGridTextColumn   Binding="{Binding  AddressAlias}"  IsReadOnly="True" ElementStyle="{StaticResource TextStyle}">
+                                                    <DataGridTextColumn.Header>
+                                                        <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='地址别名'}" />
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn   Binding="{Binding  Address}"   IsReadOnly="True"  ElementStyle="{StaticResource TextStyle}"  FontFamily="Courier New" >
+                                                    <DataGridTextColumn.Header>
+                                                        <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='地址'}" />
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                
+                                                <!--<DataGridTextColumn    Binding="{Binding  Nonce, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   IsReadOnly="True"  ElementStyle="{StaticResource NumberStyle}"  >
+                                                    <DataGridTextColumn.Header>
+                                                        <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Nonce'}" />
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>-->
+
+                                                <DataGridTemplateColumn Header="Nonce">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Label Content="{Binding Nonce,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" HorizontalContentAlignment="Center"></Label>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                    <!--<DataGridTemplateColumn.Header>
+                                                        <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Nonce'}" />
+                                                    </DataGridTemplateColumn.Header>-->
+                                                </DataGridTemplateColumn>
+
+
+                                                <DataGridTextColumn   Binding="{Binding  EthAmount}" IsReadOnly="True" ElementStyle="{StaticResource  NumberStyle}" >
+                                                    <DataGridTextColumn.Header>
+                                                        <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='ETH 余额'}" />
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn   Binding="{Binding  TokenSymbol}" IsReadOnly="True"   ElementStyle="{StaticResource  NumberStyle}">
+                                                    <DataGridTextColumn.Header>
+                                                        <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Token'}" />
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn   Binding="{Binding  TokenAmount}" IsReadOnly="True"   ElementStyle="{StaticResource  NumberStyle}">
+                                                    <DataGridTextColumn.Header>
+                                                        <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Token 余额'}" />
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+
+                                                <DataGridTemplateColumn Header="UpdateBlockNumber">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button Content="{Binding BlockNumber,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Click="UpdateBlockNumber_Click"></Button>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+
+                                                <DataGridTemplateColumn  MinWidth="100">
+                                                    <DataGridTemplateColumn.Header>
+                                                        <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='转账金额'}" />
+                                                    </DataGridTemplateColumn.Header>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding TokenAmountTransfer,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Right"  Foreground="Blue"  Margin="3" ></TextBox>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Grid>
+                                </StackPanel>
+
+                                <Grid  Grid.Row="3" Grid.Column="0" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition Width="350"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label   Grid.Column="0" Content="1.3,Amount To:"  Foreground="Blue"></Label>
+                                    <TextBox x:Name="TextBoxTo"  Grid.Column="2"  Width="330"></TextBox>
+                                </Grid>
+
+
+                            </Grid>
+                        </Expander>
+
+                        <Expander  Grid.Column="0" Grid.Row="1"  Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='2, 设置转账事务的Gas'}" 
+                                   Margin="10" IsExpanded="True"  Background="WhiteSmoke">
+                            <Grid Height="150">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="150"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0" Grid.Row="0" Content="Token:" HorizontalAlignment="Right" ></Label>
+                                <Label x:Name="LabeSelectedToken" Grid.Column="1"  Grid.Row="0" Content="?"></Label>
+
+                                <Label Grid.Column="2" Grid.Row="0" Content="GasLimit(?):" HorizontalAlignment="Right"></Label>
+                                <TextBox x:Name="TextBoxGasLimit" Grid.Column="3" Grid.Row="0" Text="?"></TextBox>
+
+                                <Label Grid.Column="0" Content="MaxPriorityFeePerGas:" Grid.Row="1" HorizontalAlignment="Right"></Label>
+                                <TextBox  x:Name="TextBoxMaxPriorityFeePerGas" Grid.Column="1" Grid.Row="1" Text="?"></TextBox>
+
+                                <Label Grid.Column="2" Grid.Row="1" Content="MaxFeePerGas:" HorizontalAlignment="Right"></Label>
+                                <TextBox  x:Name="TextBoxMaxFeePerGas" Grid.Column="3"  Grid.Row="1"  Text="?"></TextBox>
+
+                                <Button Grid.Column="2" Grid.ColumnSpan="2" Width="120" Grid.Row="2"  HorizontalAlignment="Right"  Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='得到当前值'}" Click="Gas_Click"></Button>
+
+                            </Grid>
+                        </Expander>
+
+                        <Button Grid.Column="1" Grid.Row="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='>生成准备数据>'}" Click="GenDataForOffSig_Click" Margin="5,0"></Button>
+
+                        <Expander  Grid.Column="2" Grid.Row="0" Grid.RowSpan="2"  Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='3,生成离线签名准备数据'}" 
+                                   Margin="10" IsExpanded="True"  Background="WhiteSmoke">
+                            <Grid Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button  Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='导出准备数据'}" Click="GetOffDataForSig_Click" Margin="5,0"></Button>
+                                </StackPanel>
+
+                                <DataGrid x:Name="DataGridCommonTxForSig" Grid.Row="1"  AutoGenerateColumns="False" CanUserAddRows="False"   SelectionMode="Single">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Index" Binding="{Binding IndexId}"  IsReadOnly="True"  ElementStyle="{StaticResource  NumberStyle}" ></DataGridTextColumn>
+
+                                        <DataGridTemplateColumn>
+                                            <DataGridTemplateColumn.Header>
+                                                <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='选择'}"  />
+                                            </DataGridTemplateColumn.Header>
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox  IsChecked="{Binding IsSelected, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center"></CheckBox>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <DataGridTextColumn Header="ChainId" Binding="{Binding ChainId}"  IsReadOnly="True"   ElementStyle="{StaticResource  NumberStyle}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="From" Binding="{Binding From}"  IsReadOnly="True"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="To" Binding="{Binding To}"  IsReadOnly="True"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="Nonce" Binding="{Binding Nonce}"  IsReadOnly="True"   ElementStyle="{StaticResource  NumberStyle}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="GasLimit" Binding="{Binding GasLimit}"  IsReadOnly="True"   ElementStyle="{StaticResource  NumberStyle}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="MaxFeePerGas" Binding="{Binding MaxFeePerGas}"  IsReadOnly="True"   ElementStyle="{StaticResource  NumberStyle}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="MaxPriorityFeePerGas" Binding="{Binding MaxPriorityFeePerGas}"  IsReadOnly="True"   ElementStyle="{StaticResource  NumberStyle}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="EthAmount(Wei)" Binding="{Binding EthWeiAmount}"  IsReadOnly="True"   ElementStyle="{StaticResource  NumberStyle}"></DataGridTextColumn>
+
+                                        <DataGridTextColumn Header="InputData" Binding="{Binding InputData}"  IsReadOnly="True"></DataGridTextColumn>
+
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+
+                        </Expander>
+
+                    </Grid>
+
+                </ScrollViewer>
+
+            </TabItem>
+
+            <TabItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='一个地址向多个地址转账'}" MinWidth="300">
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition ></ColumnDefinition>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition ></RowDefinition>
+                            <RowDefinition ></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Expander Grid.Column="0" Grid.Row="0" IsExpanded="True" Background="WhiteSmoke"
+                            Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='1,设置转账事务金额'}" Margin="10">
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"></RowDefinition>
+                                    <RowDefinition Height="50"></RowDefinition>
+                                    <RowDefinition Height="50"></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0"  Margin="0" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition ></ColumnDefinition>
+                                        <ColumnDefinition Width="350"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="1.1,Token:"  Grid.Column="0" Foreground="Blue" ></Label>
+                                    <ComboBox Name="ComboBoxToken2"  Grid.Column="2" Width="330" SelectionChanged="Token2_SelectionChanged"  >
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Width="{Binding  ElementName=ComboBoxToken2, Path=Width}">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="60"></ColumnDefinition>
+                                                        <ColumnDefinition ></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Image  Grid.Column="0" Source="{Binding ImagePath}" Height="30" Width="30"></Image>
+                                                    <Label Grid.Column="1" Content="{Binding Symbol}"></Label>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </Grid>
+
+                                <Grid  Grid.Row="1"  Margin="0" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition ></ColumnDefinition>
+                                        <ColumnDefinition Width="350"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label  Content="1.2,From:"   Grid.Column="0" Foreground="Blue"></Label>
+                                    <TextBox x:Name="TextBoxFrom"  Grid.Column="2" Width="330" LostFocus="From2_LostFocus" ></TextBox>
+                                    <Label  Name="LabelFromAmount" Content="?"  Grid.Column="1" HorizontalAlignment="Right"  ToolTip="FromUser's Token Amount"  Foreground="Blue"></Label>
+                                </Grid>
+
+                                <Grid Grid.Row="2"   Margin="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Label  Grid.Row="0" Grid.Column="0" Content="1.3,To:" Foreground="Blue"></Label>
+                                </Grid>
+
+                                <StackPanel Grid.Row="3" >
+
+                                    <Grid  Grid.Row="3" Grid.RowSpan="2" Grid.Column="0"  Height="100">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100"></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition ></RowDefinition>
+                                            <RowDefinition ></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Label  Grid.Row="0" Grid.Column="0"   Grid.ColumnSpan="3" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='导入地址金额, 格式是：address,amount。'}"  VerticalAlignment="Center" HorizontalAlignment="Left" ></Label>
+                                        <Button Grid.Row="0" Grid.Column="2" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='导入地址和金额'}"  Click="LoadAddressAmount_Click" HorizontalAlignment="Right" ></Button>
+
+                                        <CheckBox Grid.Row="1" Grid.Column="0" x:Name="CheckBoxSelectAll42" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='全选'}" IsChecked="True" Checked="OnSelectAll2" Unchecked="OnUnSelectAll2"   Margin="5,0"></CheckBox>
+                                        <Grid Grid.Row="1" Grid.Column="1"  >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition> 
+                                                <ColumnDefinition Width="350"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Label  Grid.Column="0"  x:Name="LabelToAllAmount" Content="?"  ToolTip="TosUser's All Amount"  HorizontalAlignment="Right" Foreground="Red"></Label>
+                                            <Button  Grid.Column="1" Content="Refresh" Click="RefreshAllAmount_Click" HorizontalAlignment="Right" ></Button>
+                                        </Grid>
+                                    </Grid>
+
+
+                                    <DataGrid x:Name="DataGridToAddressAmount" Grid.Row="5" CanUserAddRows="False"  Margin="5,0"
+                                                  CanUserDeleteRows="False" AutoGenerateColumns="False" SelectionMode="Single" MinHeight="150"  MaxHeight="400"
+                                                  CellStyle="{StaticResource Body_Content_DataGrid_Centering}">
+                                        <DataGrid.Columns>
+
+                                            <DataGridTextColumn  Binding="{Binding  IndexId}" Header="Index"  ElementStyle="{StaticResource NumberStyle}">
+                                            </DataGridTextColumn>
+
+                                            <DataGridCheckBoxColumn  Binding="{Binding  IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+                                                <DataGridCheckBoxColumn.Header>
+                                                    <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='选择'}" />
+                                                </DataGridCheckBoxColumn.Header>
+                                            </DataGridCheckBoxColumn>
+
+                                            <DataGridTextColumn   Binding="{Binding  From}"   IsReadOnly="True"  ElementStyle="{StaticResource TextStyle}"  FontFamily="Courier New" >
+                                                <DataGridTextColumn.Header>
+                                                    <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='From'}" />
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+
+                                            <DataGridTextColumn    Binding="{Binding  FromNonce}"   IsReadOnly="True"  ElementStyle="{StaticResource NumberStyle}"  >
+                                                <DataGridTextColumn.Header>
+                                                    <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='From Nonce'}" />
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+
+                                            <DataGridTextColumn   Binding="{Binding  TokenTo}"   IsReadOnly="True"  ElementStyle="{StaticResource TextStyle}"  FontFamily="Courier New" >
+                                                <DataGridTextColumn.Header>
+                                                    <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Token To'}" />
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+
+                                            <DataGridTextColumn   Binding="{Binding  TokenSymbol}" IsReadOnly="True"  ElementStyle="{StaticResource TextStyle}" >
+                                                <DataGridTextColumn.Header>
+                                                    <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='转账Token'}" />
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+
+                                            <DataGridTemplateColumn MinWidth="100">
+                                                <DataGridTemplateColumn.Header>
+                                                    <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='转账金额'}" />
+                                                </DataGridTemplateColumn.Header>
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Text="{Binding TokenAmountTransfer,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Right"  Foreground="Blue"  Margin="3" ></TextBox>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+
+                                </StackPanel>
+
+                            </Grid>
+                        </Expander>
+
+                        <Expander  Grid.Column="0" Grid.Row="1"  IsExpanded="True"  Background="WhiteSmoke"
+                            Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='2, 设置转账事务的Gas'}" Margin="10">
+                            <Grid Height="150"  VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="150"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Column="0"  Grid.Row="0" Content="Token:" HorizontalAlignment="Right" ></Label>
+                                <Label x:Name="LabeSelectedToken2" Grid.Column="1"  Grid.Row="0" Content="?"></Label>
+
+                                <Label Grid.Column="2"  Grid.Row="0" Content="GasLimit(?):" HorizontalAlignment="Right"></Label>
+                                <TextBox x:Name="TextBoxGasLimit2" Grid.Column="3"  Grid.Row="0" Text="?" Foreground="Blue"></TextBox>
+
+                                <Label Grid.Column="0"  Grid.Row="1" Content="MaxPriorityFeePerGas:" HorizontalAlignment="Right"></Label>
+                                <TextBox  x:Name="TextBoxMaxPriorityFeePerGas2" Grid.Column="1"  Grid.Row="1" Text="?"></TextBox>
+
+                                <Label Grid.Column="2"  Grid.Row="1"  Content="MaxFeePerGas:" HorizontalAlignment="Right"></Label>
+                                <TextBox  x:Name="TextBoxMaxFeePerGas2" Grid.Column="3"  Grid.Row="1" Text="?"></TextBox>
+
+                                <Button Grid.Column="3"  Grid.Row="2"  Width="120" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='得到当前值'}" Click="Gas_Click2" HorizontalAlignment="Right"></Button>
+
+                            </Grid>
+                        </Expander>
+
+                        <Button   Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
+                            Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='>生成准备数据>'}" Click="GenDataForOffSig_Click2" ></Button>
+
+
+                        <Expander  Grid.Column="2" Grid.Row="0"  IsExpanded="True"  Background="WhiteSmoke" Grid.RowSpan="2"
+                            Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='3,生成离线签名准备数据'}" Margin="10">
+                            <Grid Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button  Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='导出准备数据'}" Click="GetOffDataForSig_Click2" Margin="5,0"></Button>
+                                </StackPanel>
+
+                                <DataGrid x:Name="DataGridCommonTxForSig2" Grid.Row="1"  AutoGenerateColumns="False" CanUserAddRows="False"   SelectionMode="Single">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Index" Binding="{Binding IndexId}"  IsReadOnly="True"  ElementStyle="{StaticResource  NumberStyle}" ></DataGridTextColumn>
+
+                                        <DataGridTemplateColumn>
+                                            <DataGridTemplateColumn.Header>
+                                                <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='选择'}"  />
+                                            </DataGridTemplateColumn.Header>
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox  IsChecked="{Binding IsSelected, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center"></CheckBox>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <DataGridTextColumn Header="ChainId" Binding="{Binding ChainId}"  IsReadOnly="True"   ElementStyle="{StaticResource  NumberStyle}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="From" Binding="{Binding From}"  IsReadOnly="True"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="To" Binding="{Binding To}"  IsReadOnly="True"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="Nonce" Binding="{Binding Nonce}"  IsReadOnly="True"   ElementStyle="{StaticResource  NumberStyle}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="GasLimit" Binding="{Binding GasLimit}"  IsReadOnly="True"   ElementStyle="{StaticResource  NumberStyle}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="MaxFeePerGas" Binding="{Binding MaxFeePerGas}"  IsReadOnly="True"   ElementStyle="{StaticResource  NumberStyle}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="MaxPriorityFeePerGas" Binding="{Binding MaxPriorityFeePerGas}"  IsReadOnly="True"   ElementStyle="{StaticResource  NumberStyle}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="EthAmount(Wei)" Binding="{Binding EthWeiAmount}"  IsReadOnly="True"   ElementStyle="{StaticResource  NumberStyle}"></DataGridTextColumn>
+
+                                        <DataGridTextColumn Header="InputData" Binding="{Binding InputData}"  IsReadOnly="True"></DataGridTextColumn>
+
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                            </Grid>
+
+                        </Expander>
+
+                    </Grid>
+
+                </ScrollViewer>
+
+            </TabItem>
+
+        </TabControl>
+
+        <Button Content="Close" Grid.Row="2" Click="Close_Click" HorizontalAlignment="Right"></Button>
+
+    </Grid>
+
+</Window>

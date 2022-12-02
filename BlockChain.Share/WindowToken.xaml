@@ -1,0 +1,334 @@
+﻿<Window x:Class="BlockChain.Share.WindowToken"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlockChain.Share"
+        mc:Ignorable="d" Icon="Image\token.png" Loaded="WindowOnLoaded"
+        Title="Token" Height="600" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+
+    <Window.Resources>
+        <local:LanguageHelper x:Key="LanguageHelper"></local:LanguageHelper>
+
+        <Style x:Key="TextStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5" />
+        </Style>
+
+        <Style x:Key="TextStyle2" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        
+        <Style x:Key="NumberStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10,5" />
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+
+        <Style TargetType="Label"> 
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Height" Value="35" />
+        </Style>
+
+        <Style     TargetType="TextBlock">
+            <Setter Property="Margin" Value="2" />
+            <!--<Setter Property="HorizontalAlignment"                    Value="Center" />-->
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+    </Window.Resources>
+
+
+    <Grid  Margin="10">
+        <Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TabControl Grid.Row="0" Grid.Column="0">
+            <TabItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Token List'}" MinWidth="120">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="100"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="110"></ColumnDefinition>
+                            <ColumnDefinition Width="110"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='下面列出系统中所有的Token:'}"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left"></Label>
+                        <Button Grid.Column="1" Content="Refresh" Margin="2" Width="100" Click="TokenListRefesh_Click"></Button>
+                        <Button Grid.Column="2" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='初始化Token'}" HorizontalAlignment="Right" Margin="2" Width="100" Click="OnIniToken"></Button>
+                    </Grid>
+
+                    <DataGrid  x:Name="DataGridToken" Grid.Row="1"  CanUserAddRows="False" CanUserDeleteRows="False"  AutoGenerateColumns="False"  SelectionMode="Single">
+                        <DataGrid.Columns>
+                            
+                            <DataGridTemplateColumn Header="Token" Width="90">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="36"></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Grid.Column="0" Source="{Binding ImagePath}" MaxHeight="32" MaxWidth="32" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+                                            <TextBlock Grid.Column="1"  Text ="{Binding Symbol}"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                                                        
+                            <DataGridTemplateColumn Width="330" >
+                                <DataGridTemplateColumn.Header>
+                                    <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Token合约地址'}" />
+                                </DataGridTemplateColumn.Header>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="{Binding Path=Address}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Click="OnGotoAddress" Foreground="Blue" ></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Width="150" >
+                                <DataGridTemplateColumn.Header>
+                                    <Grid Width="145">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text ="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Price'}" />
+                                        <Button Grid.Column="1" Content="Refresh" Width="60" Click="PriceRefresh_Click"></Button>
+                                    </Grid>
+                                </DataGridTemplateColumn.Header>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="ThisTokenPrice_Click" Tag="{Binding Address}" IsEnabled="{Binding PricingIsFloat}">
+                                            <Grid HorizontalAlignment="Right">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition></ColumnDefinition>
+                                                    <ColumnDefinition Width="50"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Grid.Column="0" Content="{Binding Path=PricingTokenPrice}" ContentStringFormat="N6" Foreground="Blue" HorizontalAlignment="Right" ></Label>
+                                                <Label Grid.Column="1" Content="{Binding Path=PricingTokenSymbol}" HorizontalAlignment="Left"></Label>
+                                            </Grid>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+
+                            <DataGridTemplateColumn Width="100" Header="Is PricingToken" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="Pticing_Click" Tag="{Binding Address}" >                                           
+                                            <!--<CheckBox Content="{Binding IsPricingToken}" IsChecked="{Binding IsPricingToken}" Tag="{Binding Address}" VerticalAlignment="Center"  HorizontalAlignment="Center" Checked="IsPricingToken_Checked"></CheckBox>-->
+                                            <CheckBox Content="{Binding IsPricingToken}" IsChecked="{Binding IsPricingToken}" Tag="{Binding Address}" VerticalAlignment="Center"  HorizontalAlignment="Center" ></CheckBox>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Width="60" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='删除'}" Tag="{Binding Address}" Click="OnDelToken"></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <TextBlock Grid.Row="2" x:Name="TextBlockPriceRemark" Text="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='说明：ETH并不是ERC20代币，本系统中为了统一标识，使用地址0（0x0000000000000000000000000000000000000000）代表ETH，同时代码做了例外处理。'}"
+                               TextWrapping="Wrap" VerticalAlignment="Center"> </TextBlock>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='保存Token'}" MinWidth="120">
+                <Grid Height="360">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                        <ColumnDefinition Width="110"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition ></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition ></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='请录入满足ERC20标准的Token合约地址。特别注意：可能存在不满足接口标准的Tokene而对您造成损失；强烈推荐只添加公认的或您完全理解的Token。'}" Grid.ColumnSpan="3" HorizontalAlignment="Center" TextWrapping="Wrap"></TextBlock>
+                    <Label Grid.Row="1" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='ERC20 Tokens'}"></Label>
+                    <TextBlock  Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                        <Hyperlink Name="HyperlinkTokenListUrl" NavigateUri="https://etherscan.io/tokens" Click="OnOpenErc20TokenPage">(ETH)https://etherscan.io/tokens</Hyperlink>
+                        <!--<Hyperlink>   </Hyperlink>-->
+                        <!--<Hyperlink NavigateUri="https://bscscan.com/tokens" Click="OnOpenErc20TokenPage">(BNB)https://bscscan.com/tokens</Hyperlink>-->
+                    </TextBlock>
+                    <Label Grid.Row="2" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Token合约地址'}"></Label>
+                    <TextBox  x:Name="TextBoxTokenAddress" Grid.Row="2" Grid.Column="1" ></TextBox>
+                    <Label Grid.Row="3" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='Token图标'}"></Label>
+                    <TextBox x:Name="TextBoxTokenImagePath"  Grid.Row="3" Grid.Column="1" ></TextBox>
+                    <Button  Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='选择'}" Grid.Row="3" Grid.Column="2" Width="100" HorizontalAlignment="Right" Click="OnSelectImage"></Button>
+
+                    <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition ></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition ></RowDefinition>
+                            <RowDefinition ></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <CheckBox x:Name="CheckBoxPricingFixed" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Center" Checked="FixedPrice_Checked" Unchecked="FixedPrice_UnChecked" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='使用固定价格'}" ></CheckBox>
+
+                        <Label Grid.Row="0" Grid.Column="1" Content="Price Token Address:" HorizontalAlignment="Right" ></Label>
+                        <TextBox x:Name="TextBoxPricingToken" Grid.Row="0" Grid.Column="2"  Text=""></TextBox>
+                        <Label Grid.Row="1" Grid.Column="1" Content="Price Amount:" HorizontalAlignment="Right" ></Label>
+                        <TextBox  x:Name="TextBoxPricingAmount" Grid.Row="1" Grid.Column="2" ></TextBox>
+
+                    </Grid>
+
+
+                    <Button  x:Name="ButtonToken" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='保存'}" Grid.Row="5" Grid.Column="1"  Click="OnAddToken" Width="100" HorizontalAlignment="Left"></Button>
+                </Grid>
+
+            </TabItem>
+
+            <TabItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='本地授权历史'}" MinWidth="120">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition  Width="120" ></ColumnDefinition>
+                            <ColumnDefinition  Width="130" ></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='说明：使用本APP执行ERC20 Token授权的，都会记录如下：'}"> </Label>
+                        <CheckBox Grid.Column="1" Content="Show All" Name="CheckBoxShowAll" IsChecked="False" VerticalContentAlignment="Center"></CheckBox>
+                        <Button Grid.Column="2" Content="Refresh and Show"  Width="120" Click="RefreshApprove_Click"></Button>
+                    </Grid>
+
+                    <DataGrid x:Name="DataGridUserTokenApprove" Grid.Row="1" CanUserAddRows="False" CanUserDeleteRows="False"  AutoGenerateColumns="False"  SelectionMode="Single">
+                        <DataGrid.Columns>
+
+                            <!--<DataGridTextColumn  Header="UserAddress"   Binding="{Binding UserAddress}"  IsReadOnly="True" >
+                            </DataGridTextColumn>-->
+                            <DataGridTemplateColumn Header="UserAddress"  Width="240">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="{Binding UserAddress}" ToolTip="{Binding UserAddress}"  Click="TokenAddress_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Header="Token" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="{Binding TokenSymbol}" ToolTip="{Binding TokenAddress}"  Click="TokenAddress_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!--<DataGridTextColumn  Header="SpenderAddress"   Binding="{Binding SpenderAddress}"  IsReadOnly="True" >
+                            </DataGridTextColumn>-->
+                            <DataGridTemplateColumn Header="SpenderAddress"  Width="240">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="{Binding SpenderAddress}" ToolTip="{Binding SpenderAddress}"  Click="TokenAddress_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTextColumn  Header="Allowance Amount"   Binding="{Binding CurrentAmount}"  ElementStyle="{StaticResource TextStyle2}"   IsReadOnly="True" >
+                            </DataGridTextColumn>
+
+                            <DataGridTemplateColumn >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='取消授权'}" ToolTip="{Binding TokenAddress}" Click="CancelApprove_Click"></Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                                
+            </TabItem>
+
+            <TabItem Header="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='查询ERC20授权'}" MinWidth="120">
+
+                <Grid Height="250" Width="600" Margin="10" VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Content="Input User Address:"></Label>
+                    <TextBox x:Name="TextBoxUserAddress3" Grid.Row="0" Grid.Column="1" Text=""></TextBox>
+
+                    <Label Grid.Row="1" Grid.Column="0" Content="Input Token Address:"></Label>
+                    <TextBox  x:Name="TextBoxTokenAddress3" Grid.Row="1" Grid.Column="1" Text=""></TextBox>
+
+                    <Label Grid.Row="2" Grid.Column="0" Content="Input Spender Address:"></Label>
+                    <TextBox  x:Name="TextBoxSpenderAddress3" Grid.Row="2" Grid.Column="1" Text=""></TextBox>
+
+                    <Label Grid.Row="3" Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='得到授权金额:'}"></Label>
+                    <TextBox  x:Name="TextBoxAllowanceAmount3" Grid.Row="3" Grid.Column="1" Text="?" IsReadOnly="True" Foreground="Blue"></TextBox>
+
+                    <Grid Grid.Row="4" Grid.Column="1" Width="220"  HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition ></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='查询授权'}" Click="QueryAllowance_Click" Width="100" ></Button>
+                        <Button Grid.Column="1" Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='取消授权'}"  Click="CancelAllowance_Click" Width="100" ></Button>
+                    </Grid>
+
+                </Grid>
+                
+                
+            </TabItem>
+            
+        </TabControl>  
+        
+        <Button Content="{Binding Converter={ StaticResource LanguageHelper}, ConverterParameter='关闭'}"  Grid.Row="2" Click="OnSelectToken" HorizontalAlignment="Right" Width="120"></Button>
+   
+        
+    </Grid>
+</Window>
