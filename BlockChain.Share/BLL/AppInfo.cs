@@ -313,29 +313,30 @@ DELETE FROM ContEventBlockNum WHERE   (EventName = 'OnPublishAppDownload') OR (E
         /// <returns></returns>
         public static DataTable GetCurAppInfo()
         {
-            //            string sql = @"
-            //SELECT Info._AppId, Info._PlatformId, Info._Version, Info._Sha256Value, Info._AppName, Info._UpdateInfo, Info._IconUri, Download._IpfsLink, Download._eMuleLink, Download._BTLink, Download._HttpLink, 
-            //          Download._OtherLink
-            //FROM   AppInfo_OnPublishAppVersion AS Info LEFT OUTER JOIN
-            //          AppInfo_OnPublishAppDownload AS Download ON Info.ContractAddress = Download.ContractAddress AND Info._AppId = Download._AppId AND Info._PlatformId = Download._PlatformId AND 
-            //          Info._Version = Download._Version
-            //";
-
-            string sql = @"
-SELECT   Info._AppId, Info._PlatformId, Info._Version, Info._Sha256Value, Info._AppName, Info._UpdateInfo, Info._IconUri, 
-                Download._IpfsLink, Download._eMuleLink, Download._BTLink, Download._HttpLink, Download._OtherLink
-FROM      AppInfo_OnPublishAppVersion AS Info LEFT OUTER JOIN
-                AppInfo_OnPublishAppDownload AS Download ON Info.ContractAddress = Download.ContractAddress AND 
-                Info._AppId = Download._AppId AND Info._PlatformId = Download._PlatformId AND 
-                Info._Version = Download._Version
-WHERE   (Info._eventId =
-                    (SELECT   MAX(_eventId) AS Expr1
-                     FROM      AppInfo_OnPublishAppVersion
-                     WHERE   (ContractAddress = @ContractAddress))) AND (Info.ContractAddress = @ContractAddress) AND 
-                (Download._eventId =
-                    (SELECT   MAX(_eventId) AS Expr1
-                     FROM      AppInfo_OnPublishAppDownload
-                     WHERE   (ContractAddress = @ContractAddress))) AND (Download.ContractAddress = @ContractAddress)
+           string sql = @"
+select Info._AppId, Info._PlatformId, Info._Version, Info._Sha256Value, Info._AppName, Info._UpdateInfo, Info._IconUri, 
+       Download._IpfsLink, Download._eMuleLink, Download._BTLink, Download._HttpLink, Download._OtherLink
+from 
+    (
+        select * from
+        (
+            select *,ROW_NUMBER() OVER(PARTITION BY  _AppId, _PlatformId ORDER BY    _eventId DESC) as num
+            from AppInfo_OnPublishAppVersion
+            where ContractAddress = @ContractAddress
+        ) t
+        where t.num = 1  
+    ) as Info
+    left join  
+    (
+        select * from
+        (
+            select *,ROW_NUMBER() OVER(PARTITION BY  _AppId, _PlatformId, _Version ORDER BY    _eventId DESC) as num
+            from  AppInfo_OnPublishAppDownload
+            where ContractAddress = @ContractAddress
+        ) t
+        where t.num = 1
+    ) as Download
+    ON Info._AppId = Download._AppId AND Info._PlatformId = Download._PlatformId AND Info._Version = Download._Version
 ";
 
             SqlConnection cn = new SqlConnection(Share.ShareParam.DbConStr);
