@@ -278,7 +278,9 @@ namespace BlockChain.Share.BLL
             else
             {
                 token.PricingTokenAddress = Share.ShareParam.AddressPricingToken;
-                token.PricingTokenPrice = await Share.UniswapTokenPrice.getPrice(TokenAddress, Share.ShareParam.AddressPricingToken);                //处理稳定币价格
+                //2022-12-05 modify  太消耗时间了，这里不处理
+                token.PricingTokenPrice = 0;           
+                //token.PricingTokenPrice = await Share.UniswapTokenPrice.getPrice(TokenAddress, Share.ShareParam.AddressPricingToken);                //处理稳定币价格
 
             }
             token.IsPricingToken = Share.ShareParam.AddressPricingToken.ToLower() == TokenAddress.ToLower(); ;
@@ -373,9 +375,9 @@ namespace BlockChain.Share.BLL
 
         private static async Task<bool> SaveNewToken(string tokenAddress)
         {
-            var st = SaveTokenData(tokenAddress, @"TokenIcon\NoJPG.png", false);            //todo: 默认图标可以根据 Symbol 自动生成一张图片！ 暂时不处理
+            var st = await SaveTokenData(tokenAddress, @"TokenIcon\NoJPG.png", false);            //todo: 默认图标可以根据 Symbol 自动生成一张图片！ 暂时不处理
             log.Info("Auto SaveNewToken, TokenAddress Is " + tokenAddress + ", SaveTokenData Result: " + st.ToString());
-            return await st;
+            return  st;
         }
 
         public static System.Data.DataTable GetAllSelectedToken()
